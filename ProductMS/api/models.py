@@ -10,3 +10,5 @@ class Product(BaseModel):
     cost: float
     codebar: str
     name: str
+    category: str
+    removed: int

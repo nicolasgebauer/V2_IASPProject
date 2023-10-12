@@ -12,17 +12,10 @@ SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
 
-class ProductORM(Base):
-    __tablename__ = "products"
+class WarehouseORM(Base):
+    __tablename__ = "warehouses"
 
     id = Column(Integer, primary_key=True, index=True)
-    sku = Column(String, index=True)
-    parentsku = Column(String, index=True)
-    size = Column(String)
-    gender = Column(String)
-    price = Column(Float)
-    cost = Column(Float)
-    codebar = Column(String, index=True)
-    name = Column(String)
-    category = Column(String)
+    name = Column(String, index=True)
+    type = Column(String)
     removed = Column(Integer)

@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  product-api:
+    build: ./ProductMS
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
+
+  warehouse-api:
+    build: ./WarehouseMS
+    ports:
+      - "8001:8000"  # Cambia el puerto externo para evitar conflictos
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
+
+  db:
+    image: postgres:13.12
+    environment:
+      POSTGRES_USER: fastapi_user
+      POSTGRES_PASSWORD: fastapi_password
+      POSTGRES_DB: fastapi_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
