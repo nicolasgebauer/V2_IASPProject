@@ -13,7 +13,7 @@ services:
   warehouse-api:
     build: ./WarehouseMS
     ports:
-      - "8001:8000"  # Cambia el puerto externo para evitar conflictos
+      - "8001:8001"  # Cambia el puerto externo para evitar conflictos
     depends_on:
       - db
     environment:
