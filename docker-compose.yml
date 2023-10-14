@@ -19,6 +19,15 @@ services:
     environment:
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
 
+  inventory-api:
+    build: ./InventoryMS
+    ports:
+      - "8002:8002"  # Cambia el puerto externo para evitar conflictos
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
+
   db:
     image: postgres:13.12
     environment:

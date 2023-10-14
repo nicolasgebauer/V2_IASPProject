@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 
 class Product(BaseModel):
-    id: int
     sku: str
     parentsku: str
     size: str
