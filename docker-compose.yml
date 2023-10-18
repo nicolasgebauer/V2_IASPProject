@@ -16,6 +16,7 @@ services:
       - "8001:8001"  # Cambia el puerto externo para evitar conflictos
     depends_on:
       - db
+      - product-api
     environment:
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
 
@@ -25,7 +26,6 @@ services:
       - "8002:8002"  # Cambia el puerto externo para evitar conflictos
     depends_on:
       - db
-      - product-api
       - warehouse-api
     environment:
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
@@ -37,6 +37,16 @@ services:
     depends_on:
       - db
       - inventory-api
+    environment:
+      DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
+
+  sale-api:
+    build: ./SaleMS
+    ports:
+      - "8004:8004"  # Cambia el puerto externo para evitar conflictos
+    depends_on:
+      - db
+      - integration-api
     environment:
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
 
