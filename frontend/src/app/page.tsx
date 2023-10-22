@@ -1,5 +1,7 @@
+"use client";
 import Image from 'next/image'
-
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 // export default function Home() {
 //   return (
 //     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -112,8 +114,31 @@ import Image from 'next/image'
 //   )
 // }
 
-function Home() {
-  return <h1>Hello World</h1>
+
+
+import "./globals.css"
+
+
+
+export default function Home() {
+  return (
+
+    <div className="container-fluid">
+      <Navbar /> 
+  
+      <div className="container">
+        <div className="menu-container">
+          <div className="sidebar-container">
+            <Sidebar/>
+          </div>
+
+        </div>
+      </div>
+      
+
+       
+    </div>
+  
+  )
 }
 
-export default Home;
