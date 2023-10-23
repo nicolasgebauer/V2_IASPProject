@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: integration-api
+spec:
+  selector:
+    app: integration-api
+  ports:
+  - protocol: TCP
+    port: 8003
+    targetPort: 8003
+  type: NodePort
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: integration-api-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/path/on/host" ##cambiar
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: integration-api-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: integration-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: integration-api
+  template:
+    metadata:
+      labels:
+        app: integration-api
+    spec:
+      containers:
+        - name: integration-api
+          image: integration-api:latest
+          ports:
+            - containerPort: 8003
+          volumeMounts:
+            - name: integration-api-storage
+              mountPath: /path/in/container  # Ruta en el contenedor
+      volumes:
+      - name: integration-api-storage
+        persistentVolumeClaim:
+          claimName: integration-api-pvc
