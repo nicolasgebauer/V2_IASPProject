@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: integration-api
+  name: warehouse-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: integration-api
+      app: warehouse-api
   template:
     metadata:
       labels:
-        app: integration-api
+        app: warehouse-api
     spec:
       containers:
-      - name: integration-api
-        image: integration-api:latest
+      - name: warehouse-api
+        image: warehouse-api:latest
         ports:
-        - containerPort: 8003
+        - containerPort: 8001
         env:
         - name: DATABASE_URL
           value: "postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db"
@@ -24,11 +24,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: integration-api-service
+  name: warehouse-api-service
 spec:
   selector:
-    app: integration-api
+    app: warehouse-api
   ports:
     - protocol: TCP
-      port: 8003
-      targetPort: 8003
+      port: 8001
+      targetPort: 8001

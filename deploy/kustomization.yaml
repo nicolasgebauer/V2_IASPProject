@@ -1,7 +1,0 @@
-secretGenerator:
-  - name: db-postgres-password
-    literals:
-      - password=djangopwd
-resources:
-  - postgres.yaml
-  - integration.yaml
