@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: sale-api
-        image: sale-api:latest
+        image: jorgepdlr/iaps_v2:v2_iaspproject-sale-api
         ports:
         - containerPort: 8004
         env:

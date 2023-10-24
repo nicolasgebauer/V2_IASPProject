@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: product-api
-        image: product-api:latest
+        image: jorgepdlr/iaps_v2:v2_iaspproject-product-api
         ports:
         - containerPort: 8000
         env:
