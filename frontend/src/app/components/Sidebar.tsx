@@ -9,7 +9,7 @@ import {SiHomeassistantcommunitystore} from 'react-icons/si';
 import {MdMapsHomeWork} from 'react-icons/md';
 import {BsCardList} from 'react-icons/bs';
 import Link from 'next/link';
-
+import {useState} from 'react'; 
 const Line = styled.div`
   border-top: 1px solid #ccc; 
   margin-top: 10px;
@@ -81,7 +81,9 @@ const SidebarWrapper = styled.div`
 `;
 
 const Sidebar = ({}) => {
+  const [sidebar, setSidebar] = useState(false);
 
+  const showSidebar = () => setSidebar(!sidebar);
   return (
     <SidebarWrapper>
         <Line />
