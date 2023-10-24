@@ -65,6 +65,15 @@ services:
       - integration-api
     environment:
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
+
+  frontend-nginx:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - frontend
   
   db:
     image: postgres:13.12

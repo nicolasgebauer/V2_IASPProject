@@ -28,3 +28,12 @@ RUN rm -rf public
 RUN rm -rf next.config.js
 
 CMD ["npm", "start"]
+
+FROM nginx:latest
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=prod /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
