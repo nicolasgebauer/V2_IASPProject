@@ -8,6 +8,7 @@ import {AiOutlineHome} from 'react-icons/ai';
 import {SiHomeassistantcommunitystore} from 'react-icons/si';
 import {MdMapsHomeWork} from 'react-icons/md';
 import {BsCardList} from 'react-icons/bs';
+import Link from 'next/link';
 
 const Line = styled.div`
   border-top: 1px solid #ccc; 
@@ -97,9 +98,11 @@ const Sidebar = ({}) => {
       <div className="icon">
       <h1><SiHomeassistantcommunitystore/></h1><h1>  Minorista</h1>
       </div>
+      <Link href="/mantainers">
       <div className="icon">
       <h1><MdMapsHomeWork/></h1> <h1>Mantenedores</h1>
       </div>
+      </Link>
     </div>
     </SidebarWrapper>
   );

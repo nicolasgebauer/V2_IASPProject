@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { darkTheme } from '../styles/theme';
 import Link from 'next/link';
 import { FaUserAlt } from 'react-icons/fa';
-
+import sendDataToAPI from './../functions/POSTData';
+import { useState } from 'react';
 const Wrapper = styled.div`
   position: fixed;
   top: 0;
@@ -85,7 +86,9 @@ const Wrapper = styled.div`
 `;
 
 const Navbar = () => {
-
+  const handleSendDataClick = () => {
+    sendDataToAPI();
+  };
   return (
     <Wrapper>
       <Link href="/home">
@@ -99,6 +102,10 @@ const Navbar = () => {
       <div className="icon">
            <FaUserAlt />
           </div>
+          <div className="icon">
+          <button onClick={handleSendDataClick}>Enviar Datos</button>
+         
+        </div>
       </ul>
     </Wrapper>
   );
