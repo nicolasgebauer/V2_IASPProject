@@ -7,6 +7,8 @@ const {nextui} = require("@nextui-org/react");
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, RadioGroup, Radio} from "@nextui-org/react";
 
 
+const apiUrl = 'http://localhost:8000/products/';
+
 const TableContainer = styled.div`
   margin-top: 1rem;
   margin-left: 100px;
@@ -95,8 +97,20 @@ const sampleProducts = [
   ];
   
   const ProductsTable = () => {
-    const [productData, setProductData] = useState(sampleProducts);
-  
+    
+    const [productData, setProductData] = useState<Product[]>([]);
+
+
+    useEffect(() => {
+      axios.get('http://localhost:8000/products')
+        .then(response => {
+          setProductData(response.data as Product[]);
+        })
+        .catch(error => {
+          console.error('Error al obtener datos de la API', error);
+        });
+    }, []);
+
     return (
       <TableContainer>
         <h1>Productos</h1>

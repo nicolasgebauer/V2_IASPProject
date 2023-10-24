@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Define la URL de tu API de FastAPI
-const apiUrl = 'http://product-api:8000/products/';  // Asegúrate de usar la URL correcta de tu API
+const apiUrl = 'http://localhost:8000/products/';  // Asegúrate de usar la URL correcta de tu API
 
 // Define los datos que deseas enviar
 const productData = [
