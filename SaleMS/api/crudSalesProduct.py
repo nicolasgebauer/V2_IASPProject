@@ -14,6 +14,12 @@ def get_sales_product(db: Session, sales_product_id: int):
 def get_sales_products(db: Session):
     return db.query(SalesProductORM).all()
 
+def get_amount_sales_of_product(db: Session, product_id: int):
+    return db.query(SalesProductORM).filter(SalesProductORM.product_id == product_id).count()
+
+def get_amount_sales_per_products(db: Session):
+    return db.query(SalesProductORM.product_id).count()
+
 def update_sales_product(db: Session, sales_product_id: int, sales_product_data):
     db_sales_product = db.query(SalesProductORM).filter(SalesProductORM.id == sales_product_id).first()
     for key, value in sales_product_data.dict().items():

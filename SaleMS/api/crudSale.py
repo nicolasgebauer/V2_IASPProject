@@ -14,6 +14,12 @@ def get_sale(db: Session, sale_id: int):
 def get_sales(db: Session):
     return db.query(SaleORM).all()
 
+def get_sales_by_integration_id(db: Session, integration_id: int):
+    return db.query(SaleORM).filter(SaleORM.integration_id == integration_id).all()
+
+def get_amount_sales_per_integration_id(db: Session, integration_id: int):
+    return db.query(SaleORM).filter(SaleORM.integration_id == integration_id).count()
+
 def update_sale(db: Session, sale_id: int, sale_data):
     db_sale = db.query(SaleORM).filter(SaleORM.id == sale_id).first()
     for key, value in sale_data.dict().items():

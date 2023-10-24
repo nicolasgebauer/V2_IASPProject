@@ -4,8 +4,19 @@ from sqlalchemy.orm import Session
 from .database import SessionLocal, engine, ProductORM
 from .crud import create_product, get_product, get_products, update_product, delete_product
 from .models import Product
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Crear tablas en la base de datos
 ProductORM.__table__.create(bind=engine, checkfirst=True)
