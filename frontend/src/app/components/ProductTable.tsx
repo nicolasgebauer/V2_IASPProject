@@ -4,32 +4,35 @@ import axios, { AxiosResponse } from 'axios';
 import styled from 'styled-components';
 import { darkTheme } from '../styles/theme';
 const {nextui} = require("@nextui-org/react");
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, RadioGroup, Radio} from "@nextui-org/react";
 
 
 const apiUrl = 'http://localhost:8000/products/';
 
 const TableContainer = styled.div`
-  margin-top: 1rem;
+  margin-top: 0rem;
   margin-left: 100px;
   background: ${darkTheme.white};
+  color: ${darkTheme.black}; 
 `;
 
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   background: ${darkTheme.white};
+  color: ${darkTheme.black}; 
 
   th, td {
     padding: 0.5rem;
     text-align: left;
     border-bottom: 1px solid #ddd;
     background: ${darkTheme.white};
+    color: ${darkTheme.black}; 
   }
 
   th {
     background-color: #f2f2f2;
     background: ${darkTheme.white};
+    color: ${darkTheme.black}; 
   }
 `;
 
@@ -113,7 +116,6 @@ const sampleProducts = [
 
     return (
       <TableContainer>
-        <h1>Productos</h1>
         <StyledTable>
           <thead>
             <tr>
@@ -144,6 +146,7 @@ const sampleProducts = [
             ))}
           </tbody>
         </StyledTable>
+        
       </TableContainer>
     );
   };

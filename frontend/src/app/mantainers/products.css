@@ -6,3 +6,9 @@
 .big-container{
     background-color: white;
 }
+
+.container-modal{
+    margin-left: 210px;
+    margin-top:10px;
+    margin-bottom: 30px;
+}
