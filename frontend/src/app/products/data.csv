@@ -1,0 +1,11 @@
+sku,parentsku,size,gender,price,cost,codebar,name,category,removed
+001,P001,M,Male,50.99,25.50,123456789,Shirt A,Clothing,0
+002,P002,L,Female,39.99,18.75,987654321,Dress B,Clothing,0
+003,P003,10,Female,79.95,35.20,456789012,High Heels C,Footwear,0
+004,P004,XL,Male,129.99,60.00,789012345,Jacket D,Outerwear,0
+005,P005,S,Female,29.99,15.00,234567890,T-Shirt E,Clothing,0
+006,P006,8,Male,64.50,30.75,890123456,Sneakers F,Footwear,0
+007,P007,M,Female,44.95,20.00,345678901,Skirt G,Clothing,0
+008,P008,12,Male,89.99,42.50,901234567,Jeans H,Clothing,0
+009,P009,L,Female,54.99,25.00,567890123,Boots I,Footwear,0
+010,P010,S,Male,34.50,15.75,012345678,Hat J,Accessories,0
