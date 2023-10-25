@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from .database import InventoryORM, engine, SessionLocal
 from .crud import create_inventory, get_inventory, get_inventorys, update_inventory, delete_inventory
-from .models import Inventory
+from .models import Inventory, InventorySerializer
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -30,7 +30,7 @@ def get_db():
         db.close()
 
 @app.post("/inventorys/", response_model=Inventory)
-def create_inventory_route(inventory: Inventory, db: Session = Depends(get_db)):
+def create_inventory_route(inventory: InventorySerializer, db: Session = Depends(get_db)):
     return create_inventory(db, inventory)
 
 @app.get("/inventorys/{inventory_id}", response_model=Inventory)
