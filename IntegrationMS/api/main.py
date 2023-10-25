@@ -4,8 +4,19 @@ from sqlalchemy.orm import Session
 from .database import IntegrationORM, engine, SessionLocal
 from .crud import create_integration, get_integration, get_integrations, update_integration, delete_integration
 from .models import Integration
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Crear tablas en la base de datos
 IntegrationORM.__table__.create(bind=engine, checkfirst=True)

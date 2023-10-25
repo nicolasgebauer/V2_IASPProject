@@ -83,11 +83,11 @@ const SidebarWrapper = styled.div`
     margin-left: 0rem;
     margin-top: 0rem;
     font-family: ${darkTheme.font}, sans-serif;
-    color: ${darkTheme.white};
+
 
   }
   .subitem{
-    color: ${darkTheme.white};
+ 
     margin-left: 4rem;
     margin-top: 0rem;
     font-size: 1.2rem;

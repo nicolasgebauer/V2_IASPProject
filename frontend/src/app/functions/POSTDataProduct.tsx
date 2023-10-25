@@ -18,7 +18,7 @@ const productData =
   "removed": 0
 };
 
-const sendDataToAPI = async () => {
+const sendDataToAPIProduct = async () => {
   try {
     const response = await axios.post(apiUrl, productData);
     console.log('Datos enviados exitosamente:', response.data);
@@ -27,4 +27,4 @@ const sendDataToAPI = async () => {
   }
 };
 
-export default sendDataToAPI;
+export default sendDataToAPIProduct;

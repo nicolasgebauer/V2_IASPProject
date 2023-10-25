@@ -21,3 +21,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+.custom-modal-backdrop {
+  background-color: rgba(0, 0, 0, 0); /* Hace que el fondo sea transparente */
+}
