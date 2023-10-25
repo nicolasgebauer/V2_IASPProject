@@ -6,6 +6,15 @@ class SaleSerializer(BaseModel):
     date : datetime
     amount_products : int
     total_price : float
+    state : str
+    country : str
+    city : str
+    municipality : str
+    street : str
+    number_street : str
+    client_rut : str
+    client_name : str
+    client_email : str     
     removed : int
 
 class SalesProductSerializer(BaseModel):
@@ -19,6 +28,15 @@ class Sale(BaseModel):
     date : datetime
     amount_products : int
     total_price : float
+    state : str
+    country : str
+    city : str
+    municipality : str
+    street : str
+    number_street : str
+    client_rut : str
+    client_name : str
+    client_email : str    
     removed : int
 
 class SalesProduct(BaseModel):

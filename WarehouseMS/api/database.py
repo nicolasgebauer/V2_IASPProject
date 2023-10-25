@@ -16,6 +16,6 @@ class WarehouseORM(Base):
     __tablename__ = "warehouses"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
+    name = Column(String, index=True, unique=True)
     type = Column(String)
     removed = Column(Integer)
