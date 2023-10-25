@@ -10,6 +10,7 @@ import Link from 'next/link';
 import "./products.css";
 import {NextUIProvider} from "@nextui-org/react";
 import CreateProduct from '../components/ProductModal';
+import AddProductsFromCSV from '../components/AddProductsFile';
 
 
 export default function Products() {
@@ -19,10 +20,9 @@ export default function Products() {
 
       <Sidebar/>
       <div className="container-modal"><CreateProduct/></div>
+      <div className="container-modal"><AddProductsFromCSV/></div>
       <h2>Productos</h2>
       <div className="container-table"><ProductsTable /></div>
-        
-        
       </div>
     
   )
