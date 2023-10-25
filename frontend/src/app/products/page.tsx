@@ -20,8 +20,8 @@ export default function Products() {
       <Sidebar/>
       <div className="container-modal"><CreateProduct/></div>
       <h2>Productos</h2>
-      
-        <ProductsTable />
+      <div className="container-table"><ProductsTable /></div>
+        
         
       </div>
     

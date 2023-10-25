@@ -146,6 +146,9 @@ const Sidebar = ({}) => {
                 <Link href="/warehouses">
                   <div className="subitem">Bodega</div>
                 </Link>
+                <Link href="/integrations">
+                  <div className="subitem">Integraciones</div>
+                </Link>
               </div>
             )}
           </div>

@@ -36,7 +36,8 @@ interface Warehouse {
     name: string;
     type: string;
   
-    removed: number;    
+    removed: number;  
+    id: number;  
 }
 const WarehousesTable = () => {
     const [warehouseData, setWarehouseData] = useState<Warehouse[]>([]);
@@ -58,7 +59,7 @@ const WarehousesTable = () => {
                 <tr>
                     <th>Nombre</th>
                     <th>Tipo</th>
-                    <th>Eliminado</th>
+                    <th>ID</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,7 +67,7 @@ const WarehousesTable = () => {
                     <tr key={warehouse.name}>
                     <td>{warehouse.name}</td>
                     <td>{warehouse.type}</td>
-                    <td>{warehouse.removed}</td>
+                    <td>{warehouse.id}</td>
                     </tr>
                 ))}
                 </tbody>
