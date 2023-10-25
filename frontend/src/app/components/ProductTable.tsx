@@ -12,23 +12,27 @@ const TableContainer = styled.div`
   margin-top: 0rem;
   margin-left: 100px;
   background: ${darkTheme.white};
+  color: ${darkTheme.black}; 
 `;
 
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   background: ${darkTheme.white};
+  color: ${darkTheme.black}; 
 
   th, td {
     padding: 0.5rem;
     text-align: left;
     border-bottom: 1px solid #ddd;
     background: ${darkTheme.white};
+    color: ${darkTheme.black}; 
   }
 
   th {
     background-color: #f2f2f2;
     background: ${darkTheme.white};
+    color: ${darkTheme.black}; 
   }
 `;
 
