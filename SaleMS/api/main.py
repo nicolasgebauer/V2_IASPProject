@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from .database import SessionLocal, engine, SaleORM, SalesProductORM
 from .crudSale import create_sale, get_sale, get_sales, update_sale, delete_sale
 from .crudSalesProduct import create_sales_product, get_sales_product, get_sales_products, update_sales_product, delete_sales_product
-from .models import Sale, SalesProduct
+from .models import Sale, SalesProduct, SaleSerializer, SalesProductSerializer
 app = FastAPI()
 
 # Crear tablas en la base de datos
@@ -21,7 +21,7 @@ def get_db():
 
 ##SALE
 @app.post("/sales/", response_model=Sale)
-def create_sale_route(sale: Sale, db: Session = Depends(get_db)):
+def create_sale_route(sale: SaleSerializer, db: Session = Depends(get_db)):
     return create_sale(db, sale)
 
 @app.get("/sales/{sale_id}", response_model=Sale)
@@ -52,7 +52,7 @@ def delete_sale_route(sale_id: int, db: Session = Depends(get_db)):
 
 ##SALES_PRODUCT
 @app.post("/sales_products/", response_model=SalesProduct)
-def create_sales_product_route(sales_product: SalesProduct, db: Session = Depends(get_db)):
+def create_sales_product_route(sales_product: SalesProductSerializer, db: Session = Depends(get_db)):
     return create_sales_product(db, sales_product)
 
 @app.get("/sales_product/{sales_product_id}", response_model=SalesProduct)

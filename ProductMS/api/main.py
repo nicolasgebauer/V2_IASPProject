@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from .database import SessionLocal, engine, ProductORM
 from .crud import create_product, get_product, get_products, update_product, delete_product
-from .models import Product
+from .models import Product, ProductSerializer
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -30,7 +30,7 @@ def get_db():
         db.close()
 
 @app.post("/products/", response_model=Product)
-def create_product_route(product: Product, db: Session = Depends(get_db)):
+def create_product_route(product: ProductSerializer, db: Session = Depends(get_db)):
     return create_product(db, product)
 
 @app.get("/products/{sku}", response_model=Product)
