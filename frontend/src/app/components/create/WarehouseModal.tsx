@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import sendDataToAPIWarehouse from '../functions/POSTDataWarehouse';
+import sendDataToAPIWarehouse from '../../functions/POSTDataWarehouse';
 
 function CreateWarehouse() {
 

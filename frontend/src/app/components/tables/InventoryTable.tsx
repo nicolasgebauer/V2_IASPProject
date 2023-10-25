@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { darkTheme } from '../styles/theme';
+import { darkTheme } from '../../styles/theme';
 
 const apiUrl = 'http://localhost:8002/inventorys';
 

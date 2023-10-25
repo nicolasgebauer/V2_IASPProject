@@ -2,13 +2,13 @@
 
 
 "use client";
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/general/Navbar';
+import Sidebar from '../components/general/Sidebar';
 import "./../globals.css"
 import "./products.css";
 import {NextUIProvider} from "@nextui-org/react";
-import IntegrationTable from '../components/MantainersTable';
-import CreateModal from '../components/IntegrationModal';
+import IntegrationTable from '../components/tables/MantainersTable';
+import CreateModal from '../components/create/IntegrationModal';
 export default function Mantainers() {
   return (
     <NextUIProvider>

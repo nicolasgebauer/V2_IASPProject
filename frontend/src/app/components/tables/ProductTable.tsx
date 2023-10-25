@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import styled from 'styled-components';
-import { darkTheme } from '../styles/theme';
+import { darkTheme } from '../../styles/theme';
 const {nextui} = require("@nextui-org/react");
 
 

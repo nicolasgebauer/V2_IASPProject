@@ -6,7 +6,19 @@ from .crudSale import create_sale, get_sale, get_sales, update_sale, delete_sale
 from .crudSalesProduct import create_sales_product, get_sales_product, get_sales_products, update_sales_product, delete_sales_product
 from .crudSalesProduct import get_products_by_sale
 from .models import Sale, SalesProduct, SaleSerializer, SalesProductSerializer
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Crear tablas en la base de datos
 SaleORM.__table__.create(bind=engine, checkfirst=True)

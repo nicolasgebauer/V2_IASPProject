@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
 // Importa la función sendDataToAPIProduct desde el archivo adecuado
-import sendDataToAPIProduct from '../functions/POSTDataProduct';
+import sendDataToAPIProduct from '../../functions/POSTDataProduct';
 
 function CreateProduct() {
   const [show, setShow] = useState(false);

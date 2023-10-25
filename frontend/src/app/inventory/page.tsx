@@ -1,12 +1,12 @@
 "use client";
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/general/Navbar';
+import Sidebar from '../components/general/Sidebar';
 import "./../globals.css"
-import InventoryTable from '../components/InventoryTable';
+import InventoryTable from '../components/tables/InventoryTable';
 import Link from 'next/link';
 import "./../products/products.css";
 import {NextUIProvider} from "@nextui-org/react";
-import CreateInventory from '../components/CreateInventory';
+import CreateInventory from '../components/create/CreateInventory';
 export default function Inventory() {
   return (
     <div className="container-fluid">

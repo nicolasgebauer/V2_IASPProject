@@ -2,7 +2,7 @@
 "use client";
 import { useState } from 'react';
 import styled, { css } from "styled-components";
-import { darkTheme } from "../styles/theme";
+import { darkTheme } from "../../styles/theme";
 import { BsFileBarGraph } from 'react-icons/bs';
 import {AiOutlineHome} from 'react-icons/ai';
 import {SiHomeassistantcommunitystore} from 'react-icons/si';

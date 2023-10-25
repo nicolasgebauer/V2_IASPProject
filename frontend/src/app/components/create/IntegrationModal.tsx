@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import sendDataToAPIIntegration from '../functions/POSTDataIntegration';
+import sendDataToAPIIntegration from '../../functions/POSTDataIntegration';
 import Link from 'next/link';
 
 function CreateModal() {
