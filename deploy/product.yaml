@@ -17,6 +17,8 @@ spec:
         image: jorgepdlr/iaps_v2:v2_iaspproject-product-api
         ports:
         - containerPort: 8000
+          name: http
+          protocol: TCP
         env:
         - name: DATABASE_URL
           value: "postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db"
@@ -32,3 +34,4 @@ spec:
     - protocol: TCP
       port: 8000
       targetPort: 8000
+  type: NodePort

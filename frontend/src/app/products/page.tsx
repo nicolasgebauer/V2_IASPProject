@@ -9,7 +9,8 @@ import ProductsTable from '../components/ProductTable';
 import Link from 'next/link';
 import "./products.css";
 import {NextUIProvider} from "@nextui-org/react";
-import CreateModal from '../components/CreateModal';
+import CreateProduct from '../components/ProductModal';
+
 
 export default function Products() {
   return (
@@ -17,9 +18,10 @@ export default function Products() {
       <Navbar /> 
 
       <Sidebar/>
+      <div className="container-modal"><CreateProduct/></div>
       <h2>Productos</h2>
-      
-        <ProductsTable />
+      <div className="container-table"><ProductsTable /></div>
+        
         
       </div>
     

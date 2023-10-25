@@ -32,3 +32,4 @@ spec:
     - protocol: TCP
       port: 8003
       targetPort: 8003
+  type: NodePort

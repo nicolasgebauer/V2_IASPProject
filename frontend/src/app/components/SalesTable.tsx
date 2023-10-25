@@ -6,7 +6,7 @@ import { darkTheme } from '../styles/theme';
 const {nextui} = require("@nextui-org/react");
 
 
-const apiUrl = 'http://localhost:8000/products/';
+const apiUrl = 'http://localhost:8004/sales_products/';
 
 const TableContainer = styled.div`
   margin-top: 0rem;
