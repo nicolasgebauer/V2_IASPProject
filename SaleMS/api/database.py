@@ -20,6 +20,15 @@ class SaleORM(Base):
     date = Column(DateTime)
     amount_products = Column(Integer, nullable=True)
     total_price = Column(Float, nullable=True)
+    state = Column(String, nullable=True)
+    country = Column(String, nullable=True)
+    city = Column(String, nullable=True)
+    municipality = Column(String, nullable=True)
+    street = Column(String, nullable=True)
+    number_street = Column(String, nullable=True)
+    client_rut = Column(String, nullable=True)
+    client_name = Column(String, nullable=True)
+    client_email = Column(String, nullable=True)
     removed = Column(Integer)
 
 class SalesProductORM(Base):

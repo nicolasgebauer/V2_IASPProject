@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from .database import InventoryORM, engine, SessionLocal
 from .crud import create_inventory, get_inventory, get_inventorys, update_inventory, delete_inventory
-from .models import Inventory
+from .models import Inventory, InventorySerializer
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -18,10 +18,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Crear tablas en la base de datos
+
 InventoryORM.__table__.create(bind=engine, checkfirst=True)
 
-# Dependencia para obtener la sesión de la base de datos
 def get_db():
     db = SessionLocal()
     try:
@@ -30,7 +29,7 @@ def get_db():
         db.close()
 
 @app.post("/inventorys/", response_model=Inventory)
-def create_inventory_route(inventory: Inventory, db: Session = Depends(get_db)):
+def create_inventory_route(inventory: InventorySerializer, db: Session = Depends(get_db)):
     return create_inventory(db, inventory)
 
 @app.get("/inventorys/{inventory_id}", response_model=Inventory)
@@ -44,12 +43,13 @@ def get_inventory_route(inventory_id: int, db: Session = Depends(get_db)):
 def list_inventorys_route(db: Session = Depends(get_db)):
     return get_inventorys(db)
 
-@app.put("/inventorys/{inventory_id}", response_model=Inventory)
-def update_inventory_route(inventory_id: int, inventory_data: Inventory, db: Session = Depends(get_db)):
-    updated_inventory = update_inventory(db, inventory_id, inventory_data)
+@app.put("/inventorys/{product_id}/{warehouse_id}", response_model=Inventory)
+def update_inventory_route(product_id: int, warehouse_id: int, inventory_data: Inventory, db: Session = Depends(get_db)):
+    updated_inventory = update_inventory(db, product_id, warehouse_id, inventory_data)
     if not updated_inventory:
         raise HTTPException(status_code=404, detail="Inventory not found")
     return updated_inventory
+
 
 @app.delete("/inventorys/{inventory_id}", response_model=Inventory)
 def delete_inventory_route(inventory_id: int, db: Session = Depends(get_db)):

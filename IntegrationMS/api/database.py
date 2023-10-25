@@ -16,7 +16,7 @@ class IntegrationORM(Base):
     __tablename__ = "integrations"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
-    url = Column(String)
+    name = Column(String, unique=True)
+    url = Column(String , unique=True)
     type = Column(String)
 

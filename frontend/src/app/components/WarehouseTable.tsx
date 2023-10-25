@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import styled from 'styled-components';
 import { darkTheme } from '../styles/theme';
-const {nextui} = require("@nextui-org/react");
+
+const apiUrl = 'http://localhost:8001/warehouses';
 
 const TableContainer = styled.div`
     margin-top: 0rem;
@@ -15,8 +16,6 @@ const StyledTable = styled.table`
     width: 100%;
     border-collapse: collapse;
     background: ${darkTheme.white};
-    color: ${darkTheme.black}; 
-
     th, td {
         padding: 0.5rem;
         text-align: left;
@@ -31,25 +30,27 @@ const StyledTable = styled.table`
         color: ${darkTheme.black}; 
     }`;
 
-const apiUrl = 'http://localhost:8001/warehouses';
+
 
 interface Warehouse {
     name: string;
     type: string;
-    removed: number;    
+  
+    removed: number;  
+    id: number;  
 }
 const WarehousesTable = () => {
     const [warehouseData, setWarehouseData] = useState<Warehouse[]>([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8001/warehouses')
+        axios.get(apiUrl)
         .then(response => {
             setWarehouseData(response.data as Warehouse[]);
         })
         .catch(error => {
             console.error('Error al obtener datos de la API: Warehouses', error);
         });
-    }, []);
+    }, [warehouseData]);
 
     return (
         <TableContainer>
@@ -58,7 +59,7 @@ const WarehousesTable = () => {
                 <tr>
                     <th>Nombre</th>
                     <th>Tipo</th>
-                    <th>Eliminado</th>
+                    <th>ID</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,7 +67,7 @@ const WarehousesTable = () => {
                     <tr key={warehouse.name}>
                     <td>{warehouse.name}</td>
                     <td>{warehouse.type}</td>
-                    <td>{warehouse.removed}</td>
+                    <td>{warehouse.id}</td>
                     </tr>
                 ))}
                 </tbody>
