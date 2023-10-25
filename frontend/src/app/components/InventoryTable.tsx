@@ -1,12 +1,9 @@
-"use client";
 import React, { useState, useEffect } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import styled from 'styled-components';
 import { darkTheme } from '../styles/theme';
-const {nextui} = require("@nextui-org/react");
 
-
-const apiUrl = 'http://localhost:8000/products/';
+const apiUrl = 'http://localhost:8002/inventorys';
 
 const TableContainer = styled.div`
   margin-top: 0rem;
@@ -41,51 +38,88 @@ interface Inventory {
   warehouse_id: number;
   amount: number;
 }
-const sampleProducts = [
-    {
-      product_id: 1,
-      warehouse_id: 1,
-      amount: 100,
-    }
-  ];
-  
-  const InventoryTable = () => {
-    
-    const [inventoryData, setInventoryData] = useState<Inventory[]>([]);
 
+const InventoryTable = () => {
+  const [inventoryData, setInventoryData] = useState<Inventory[]>([]);
+  const [editableData, setEditableData] = useState<Inventory[]>([]);
 
-    useEffect(() => {
-      axios.get('http://localhost:8002/inventorys')
-        .then(response => {
-          setInventoryData(response.data as Inventory[]);
-        })
-        .catch(error => {
-          console.error('Error al obtener datos de la API', error);
-        });
-    }, []);
+  useEffect(() => {
+    axios.get(apiUrl)
+      .then((response) => {
+        setInventoryData(response.data as Inventory[]);
+        setEditableData(response.data as Inventory[]); // Copia de los datos editables
+      })
+      .catch((error) => {
+        console.error('Error al obtener datos de la API', error);
+      });
+  }, []);
 
-    return (
-      <TableContainer>
-        <StyledTable>
-          <thead>
-            <tr>
-              <th>ID Producto</th>
-              <th>ID Bodega</th>
-              <th>Cantidad</th>
-            </tr>
-          </thead>
-          <tbody>
-            {inventoryData.map((inventory, index) => (
-              <tr key={index}>
-                <td>{inventory.product_id}</td>
-                <td>{inventory.warehouse_id}</td>
-                <td>{inventory.amount}</td>
-              </tr>
-            ))}
-          </tbody>
-        </StyledTable>
-        
-      </TableContainer>
-    );
+  const saveChangesToAPI = (editedItem: Inventory) => {
+    const putUrl = `${apiUrl}/${editedItem.product_id}/${editedItem.warehouse_id}`;
+    axios
+      .put(putUrl, editedItem)
+      .then(() => {
+        console.log('Cambios guardados exitosamente');
+        setInventoryData((prevData) =>
+          prevData.map((item) =>
+            item.product_id === editedItem.product_id &&
+            item.warehouse_id === editedItem.warehouse_id
+              ? editedItem
+              : item
+          )
+        );
+      })
+      .catch((error) => {
+        console.error('Error al guardar cambios:', error);
+      });
   };
-  export default InventoryTable;
+
+  const handleEdit = (index: number, field: keyof Inventory, value: any) => {
+    const updatedData = [...editableData];
+    updatedData[index][field] = value;
+    setEditableData(updatedData);
+  };
+
+  return (
+    <TableContainer>
+      <StyledTable>
+        <thead>
+          <tr>
+            <th>ID Producto</th>
+            <th>ID Bodega</th>
+            <th>Cantidad</th>
+            <th>Acciones</th> 
+          </tr>
+        </thead>
+        <tbody>
+          {editableData.map((inventory, index) => (
+            <tr key={index}>
+              <td>{inventory.product_id}</td>
+              <td>
+                <input
+                  type="text"
+                  value={inventory.warehouse_id}
+                  onChange={(e) => handleEdit(index, 'warehouse_id', e.target.value)}
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={inventory.amount}
+                  onChange={(e) => handleEdit(index, 'amount', parseInt(e.target.value, 10))}
+                />
+              </td>
+              <td>
+                <button onClick={() => saveChangesToAPI(inventory)}>
+                  Guardar Cambios
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </StyledTable>
+    </TableContainer>
+  );
+};
+
+export default InventoryTable;

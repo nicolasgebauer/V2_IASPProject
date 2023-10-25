@@ -112,7 +112,7 @@ const sampleProducts = [
         .catch(error => {
           console.error('Error al obtener datos de la API', error);
         });
-    }, []);
+    }, [productData]);
 
     return (
       <TableContainer>

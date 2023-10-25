@@ -17,7 +17,7 @@ function CreateModal() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const modalStyle = {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Cambia el nivel de transparencia según tus preferencias
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

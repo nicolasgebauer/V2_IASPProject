@@ -7,7 +7,7 @@ import Sidebar from '../components/Sidebar';
 import "./../globals.css"
 import "./products.css";
 import {NextUIProvider} from "@nextui-org/react";
-import CreateModal from '../components/CreateModal';
+import CreateModal from '../components/IntegrationModal';
 import IntegrationTable from '../components/MantainersTable';
 export default function Mantainers() {
   return (

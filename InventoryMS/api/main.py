@@ -18,10 +18,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Crear tablas en la base de datos
+
 InventoryORM.__table__.create(bind=engine, checkfirst=True)
 
-# Dependencia para obtener la sesión de la base de datos
 def get_db():
     db = SessionLocal()
     try:
@@ -44,12 +43,13 @@ def get_inventory_route(inventory_id: int, db: Session = Depends(get_db)):
 def list_inventorys_route(db: Session = Depends(get_db)):
     return get_inventorys(db)
 
-@app.put("/inventorys/{inventory_id}", response_model=Inventory)
-def update_inventory_route(inventory_id: int, inventory_data: Inventory, db: Session = Depends(get_db)):
-    updated_inventory = update_inventory(db, inventory_id, inventory_data)
+@app.put("/inventorys/{product_id}/{warehouse_id}", response_model=Inventory)
+def update_inventory_route(product_id: int, warehouse_id: int, inventory_data: Inventory, db: Session = Depends(get_db)):
+    updated_inventory = update_inventory(db, product_id, warehouse_id, inventory_data)
     if not updated_inventory:
         raise HTTPException(status_code=404, detail="Inventory not found")
     return updated_inventory
+
 
 @app.delete("/inventorys/{inventory_id}", response_model=Inventory)
 def delete_inventory_route(inventory_id: int, db: Session = Depends(get_db)):

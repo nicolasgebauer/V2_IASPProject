@@ -63,9 +63,7 @@ const Wrapper = styled.div`
 `;
 
 const Navbar = () => {
-  const handleSendDataClick = () => {
-    sendDataToAPIProduct();
-  };
+
   return (
    <Wrapper>
       <Stack direction="horizontal" gap={3}>
@@ -83,13 +81,7 @@ const Navbar = () => {
            <FaUserAlt />
           </Link>
         </div>
-        <div className="p-2"> 
-          <ul>
-            <div className="icon">
-              <button onClick={handleSendDataClick}>Enviar Datos</button>
-            </div>
-          </ul>
-        </div>
+
       </Stack>
     </Wrapper>
 
