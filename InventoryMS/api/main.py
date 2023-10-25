@@ -4,8 +4,19 @@ from sqlalchemy.orm import Session
 from .database import InventoryORM, engine, SessionLocal
 from .crud import create_inventory, get_inventory, get_inventorys, update_inventory, delete_inventory
 from .models import Inventory
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Crear tablas en la base de datos
 InventoryORM.__table__.create(bind=engine, checkfirst=True)

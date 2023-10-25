@@ -5,24 +5,15 @@ import { darkTheme } from '../styles/theme';
 import Link from 'next/link';
 import { FaUserAlt } from 'react-icons/fa';
 import sendDataToAPI from './../functions/POSTData';
-import { useState } from 'react';
+import Stack from 'react-bootstrap/Stack';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const Wrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 8.5%;
-  z-index: 99;
-  padding: 0.7rem 1.5rem;
   background:${darkTheme.darkBlue};
-
-
-  input {
-    width: 150%;
-  }
+  margin-left: -15px;
+  width: 101.5%;
+  height: 80px;
+  margin-right: -15px;
 
   .logo span {
     position: relative;
@@ -34,21 +25,6 @@ const Wrapper = styled.div`
   }
   .icon {
     color: ${darkTheme.white};
-    margin-right: 2rem;
-    margin-left: 5rem;
-    margin-top: 1rem;
-  }
-  ul {
-    list-style: none;
-    display: flex;
-    position: relative;
-    top: 2px;
-  }
-
-  li svg {
-    margin-right: 1.7rem;
-    position: relative;
-    top: 3px;
   }
 
 
@@ -90,24 +66,32 @@ const Navbar = () => {
     sendDataToAPI();
   };
   return (
-    <Wrapper>
-      <Link href="/home">
-      <div className="logo flex-row">
-        <span>
-        Hope Solutions
-        </span>
-      </div>
-      </Link>
-      <ul>
-      <div className="icon">
-           <FaUserAlt />
-          </div>
-          <div className="icon">
-          <button onClick={handleSendDataClick}>Enviar Datos</button>
-         
+   <Wrapper>
+      <Stack direction="horizontal" gap={3}>
+        <div className="p-2"> 
+          <Link href="/">
+            <div className="logo flex-row">
+              <span>
+                Hope Solutions
+              </span>
+            </div>
+          </Link>
         </div>
-      </ul>
+        <div className="p-2 ms-auto"> 
+          <Link href="/home">
+           <FaUserAlt />
+          </Link>
+        </div>
+        <div className="p-2"> 
+          <ul>
+            <div className="icon">
+              <button onClick={handleSendDataClick}>Enviar Datos</button>
+            </div>
+          </ul>
+        </div>
+      </Stack>
     </Wrapper>
+
   );
 };
 
