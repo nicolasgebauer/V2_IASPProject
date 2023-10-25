@@ -64,7 +64,7 @@ const WarehousesTable = () => {
                 </thead>
                 <tbody>
                 {warehouseData.map(warehouse => (
-                    <tr key={warehouse.name}>
+                    <tr key={warehouse.id}>
                     <td>{warehouse.name}</td>
                     <td>{warehouse.type}</td>
                     <td>{warehouse.id}</td>
