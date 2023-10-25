@@ -9,8 +9,8 @@ import ProductsTable from '../components/tables/ProductTable';
 import Link from 'next/link';
 import "./products.css";
 import {NextUIProvider} from "@nextui-org/react";
-import CreateProduct from '../components/ProductModal';
-
+import CreateProduct from '../components/create/ProductModal';
+import AddProductsFromCSV from '../components/AddProductsFile';
 
 export default function Products() {
   return (
