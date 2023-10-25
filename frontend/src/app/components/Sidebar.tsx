@@ -130,27 +130,33 @@ const Sidebar = ({}) => {
       <div className="icon">
         <h1><SiHomeassistantcommunitystore/></h1><h1>  Minorista</h1>
       </div>
-      <Link href="/products">
-        <div className="icon">
-          <h1><MdMapsHomeWork/></h1> <h1>Mantenedores</h1>
-        </div>
-      </Link>
-      <div className="item1" onClick={toggleSubitems}>
-        
-          <div className="icon"><h1><BsCardList/> </h1><h1> General</h1><h2><BiSolidDownArrow/></h2></div>
-            <div className="sub-items">
-              {showSubitems && (
-                <div className="list-subitems">
-                  <Link href="/products">
-                    <div className="subitem">Productos</div>
-                  </Link>
-                  <Link href="/inventory">
-                    <div className="subitem">Inventario</div>
-                  </Link>
-                </div>
-              )}
+      <div className="dropdown-maintainers" onClick={toggleSubitems}>
+        <div className="icon"><h1><BsCardList/> </h1><h1> Mantenedores</h1><h2><BiSolidDownArrow/></h2></div>
+        <div className="sub-items">
+          {showSubitems && (
+            <div className="list-subitems">
+              <Link href="/warehouses">
+                <div className="subitem">Bodega</div>
+              </Link>
             </div>
+          )}
+        </div>
+      </div>
+      <div className="dropdown-general" onClick={toggleSubitems}>
+        <div className="icon"><h1><BsCardList/> </h1><h1> General</h1><h2><BiSolidDownArrow/></h2></div>
+          <div className="sub-items">
+            {showSubitems && (
+              <div className="list-subitems">
+                <Link href="/products">
+                  <div className="subitem">Productos</div>
+                </Link>
+                <Link href="/inventory">
+                  <div className="subitem">Inventario</div>
+                </Link>
+              </div>
+            )}
           </div>
+      </div>
         
     
     </Stack>

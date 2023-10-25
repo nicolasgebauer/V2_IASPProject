@@ -4,8 +4,19 @@ from sqlalchemy.orm import Session
 from .database import SessionLocal, engine, WarehouseORM
 from .crud import create_warehouse, get_warehouse, get_warehouses, update_warehouse, delete_warehouse
 from .models import Warehouse
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=[""],
+    allow_headers=["*"],
+)
 
 # Crear tablas en la base de datos
 WarehouseORM.__table__.create(bind=engine, checkfirst=True)
