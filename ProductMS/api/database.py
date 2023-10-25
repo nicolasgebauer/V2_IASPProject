@@ -11,7 +11,6 @@ engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
-# Inicialización de Elasticsearch
 es = Elasticsearch([{"host": "elasticsearch", "port": 9200, "scheme": "http"}])
 
 # Tu modelo ORM existente...

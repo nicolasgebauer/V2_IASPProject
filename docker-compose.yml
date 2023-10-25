@@ -10,6 +10,18 @@ services:
       POSTGRES_DB: fastapi_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    container_name: elasticsearch
+    environment:
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
       
   product-api:
     build: ./ProductMS
@@ -17,6 +29,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - elasticsearch
     environment:
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
 
@@ -63,8 +76,6 @@ services:
     env_file:
       - ./frontend/.env
     container_name: frontend-dev
-    depends_on:
-      - db
 
   sale-api:
     build: ./SaleMS
@@ -75,17 +86,6 @@ services:
       - integration-api
     environment:
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.1
-    environment:
-      - "discovery.type=single-node"
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    volumes:
-      - esdata:/usr/share/elasticsearch/data
 
 volumes:
   postgres_data:

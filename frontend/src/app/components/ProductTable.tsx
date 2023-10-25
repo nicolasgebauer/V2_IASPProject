@@ -48,56 +48,6 @@ interface Product {
   category: string;
   removed: number;
 }
-const sampleProducts = [
-    {
-      sku: "SKU-001",
-      parentsku: "ParentSKU-001",
-      size: "Medium",
-      gender: "Male",
-      price: 29.99,
-      cost: 15.99,
-      codebar: "1234567890",
-      name: "Product 1",
-      category: "Clothing",
-      removed: 0
-    },
-    {
-      sku: "SKU-002",
-      parentsku: "ParentSKU-002",
-      size: "Large",
-      gender: "Female",
-      price: 39.99,
-      cost: 22.99,
-      codebar: "2345678901",
-      name: "Product 2",
-      category: "Clothing",
-      removed: 0
-    },
-    {
-      sku: "SKU-003",
-      parentsku: "ParentSKU-003",
-      size: "Small",
-      gender: "Unisex",
-      price: 19.99,
-      cost: 11.99,
-      codebar: "3456789012",
-      name: "Product 3",
-      category: "Accessories",
-      removed: 0
-    },
-    {
-      sku: "SKU-004",
-      parentsku: "ParentSKU-004",
-      size: "Medium",
-      gender: "Male",
-      price: 29.99,
-      cost: 15.99,
-      codebar: "4567890123",
-      name: "Product 4",
-      category: "Clothing",
-      removed: 0
-    }
-  ];
   
   const ProductsTable = () => {
     
@@ -143,7 +93,34 @@ const sampleProducts = [
         </div>
 
         <StyledTable>
-          {/* ... Tu código de tabla existente ... */}
+        <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Nombre</th>
+              <th>Tamaño</th>
+              <th>Género</th>
+              <th>Precio</th>
+              <th>Costo</th>
+              <th>Código de Barras</th>
+              <th>Categoría</th>
+              <th>Eliminado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {productData.map(product => (
+              <tr key={product.sku}>
+                <td>{product.sku}</td>
+                <td>{product.name}</td>
+                <td>{product.size}</td>
+                <td>{product.gender}</td>
+                <td>{product.price}</td>
+                <td>{product.cost}</td>
+                <td>{product.codebar}</td>
+                <td>{product.category}</td>
+                <td>{product.removed}</td>
+              </tr>
+            ))}
+          </tbody>
         </StyledTable>
         
       </TableContainer>

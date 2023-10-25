@@ -1,7 +1,8 @@
-TRY_LOOP="20"
+#!/bin/sh
 
-: "${POSTGRES_HOST:="postgres"}"
-: "${POSTGRES_PORT:="5432"}"
+TRY_LOOP="20"
+POSTGRES_HOST="db"
+POSTGRES_PORT="5432"
 
 wait_for_port() {
   local name="$1" host="$2" port="$3"
@@ -20,7 +21,4 @@ wait_for_port() {
 echo "$POSTGRES_HOST" "$POSTGRES_PORT"
 wait_for_port "Postgres" "$POSTGRES_HOST" "$POSTGRES_PORT"
 
-echo "starting product microservice"
-
-# uvicorn main:app --port=$SERVICE_PORT --host=0.0.0.0
-uvicorn api.main:app --host 0.0.0.0 --port 8000
+exec "$@"
