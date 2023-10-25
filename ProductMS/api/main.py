@@ -5,6 +5,8 @@ from .database import SessionLocal, engine, ProductORM
 from .crud import create_product, get_product, get_products, update_product, delete_product
 from .models import Product
 from fastapi.middleware.cors import CORSMiddleware
+from .database import es
+
 
 app = FastAPI()
 
@@ -17,6 +19,21 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/search/")
+async def search_products(q: str):
+    response = es.search(
+        index="products",
+        body={
+            "query": {
+                "multi_match": {
+                    "query": q,
+                    "fields": ["sku", "name", "category", "codebar"]
+                }
+            }
+        }
+    )
+    return [hit["_source"] for hit in response["hits"]["hits"]]
 
 # Crear tablas en la base de datos
 ProductORM.__table__.create(bind=engine, checkfirst=True)
