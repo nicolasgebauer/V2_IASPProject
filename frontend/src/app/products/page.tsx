@@ -16,7 +16,7 @@ export default function Products() {
       <Navbar /> 
 
       <Sidebar/>
-      <h1>Productos</h1>
+      <h2>Productos</h2>
         <ProductsTable />
         
       </div>
