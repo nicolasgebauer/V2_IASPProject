@@ -10,3 +10,9 @@ class Warehouse(BaseModel):
     type: str
     removed: int
 
+class SalesProduct(BaseModel):
+    id : int
+    sale_id : int
+    product_id : int
+    count : int
+    removed : int

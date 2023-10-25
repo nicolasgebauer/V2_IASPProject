@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from .database import SessionLocal, engine, SaleORM, SalesProductORM
 from .crudSale import create_sale, get_sale, get_sales, update_sale, delete_sale
 from .crudSalesProduct import create_sales_product, get_sales_product, get_sales_products, update_sales_product, delete_sales_product
+from .crudSalesProduct import get_products_by_sale
 from .models import Sale, SalesProduct, SaleSerializer, SalesProductSerializer
 app = FastAPI()
 
@@ -49,6 +50,9 @@ def delete_sale_route(sale_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Sale not found")
     return deleted_sale
 
+@app.get("/sales/{sale_id}/products", response_model=List[SalesProduct])
+def get_products_by_sale_route(sale_id: int, db: Session = Depends(get_db)):
+    return get_products_by_sale(db, sale_id)
 
 ##SALES_PRODUCT
 @app.post("/sales_products/", response_model=SalesProduct)
@@ -64,7 +68,7 @@ def get_sales_product_route(sales_product_id: int, db: Session = Depends(get_db)
 
 @app.get("/sales_product/", response_model=List[SalesProduct])
 def list_sales_product_route(db: Session = Depends(get_db)):
-    return get_sales_product(db)
+    return get_sales_products(db)
 
 @app.put("/sales_products/{sales_product_id}", response_model=SalesProduct)
 def update_sales_product_route(sales_product_id: int, sales_product_data: SalesProduct, db: Session = Depends(get_db)):
