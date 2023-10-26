@@ -1,27 +1,26 @@
-
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const apiSalesProductsUrl = 'http://localhost:8004/sales_products/';
+const apiSalesProductsUrl = 'http://localhost:8004/sales/';
 const labelStyle = {
   fontWeight: 'bold',
-  marginRight: '8px', 
+  marginRight: '8px',
 };
 
 const lineStyle = {
   borderBottom: '1px solid #ccc',
   marginBottom: '8px',
-  display: 'flex', 
-  alignItems: 'center', 
+  display: 'flex',
+  alignItems: 'center',
 };
 
 interface SalesProducts {
-  sale_id : number,
-  product_id : number,
-  count : number,
-  removed : number,
+  sale_id: number;
+  product_id: number;
+  count: number;
+  removed: number;
 }
 
 interface Sale {
@@ -55,7 +54,6 @@ interface Product {
   removed: number;
 }
 
-
 interface SaleDetailsProps {
   show: boolean;
   handleClose: () => void;
@@ -67,18 +65,45 @@ const SaleDetails: React.FC<SaleDetailsProps> = ({ show, handleClose, saleData }
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   };
 
-  const [salesProductsData, setSalesProductsData] = useState<Product[]>();
-  const [isSaleDetailsOpen, setIsSaleDetailsOpen] = useState(false);
+  const [salesProductsData, setSalesProductsData] = useState<SalesProducts[]>();
+  const [allProductResponses, setAllProductResponses] = useState<Product[]>([]);
 
   useEffect(() => {
-    axios.get(`${apiSalesProductsUrl}/${saleData?.id}/products`)
+    axios.get(`${apiSalesProductsUrl}${saleData?.id}/products`)
       .then(response => {
-        setSalesProductsData(response.data as Product[]);
+        setSalesProductsData(response.data as SalesProducts[]);
       })
       .catch(error => {
         console.error('Error al obtener datos de la API', error);
       });
   }, [saleData?.id]);
+
+  useEffect(() => {
+    if (salesProductsData && salesProductsData.length > 0) {
+      const productRequests = salesProductsData.map((product) => {
+        const productEndpoint = `http://localhost:8000/products/${product.product_id}`;
+        return axios.get(productEndpoint)
+          .then((response) => response.data as Product)
+          .catch((error) => {
+            console.error('Error al obtener datos de la API', error);
+            return null;
+          });
+      });
+
+      Promise.all(productRequests)
+        .then((responses) => {
+          setAllProductResponses(responses.filter((response) => response !== null) as Product[]);
+        });
+    }
+  }, [salesProductsData]);
+
+  // Efecto para limpiar las listas cuando se cierra el modal
+  useEffect(() => {
+    if (!show) {
+      setSalesProductsData([]);
+      setAllProductResponses([]);
+    }
+  }, [show]);
 
   return (
     <Modal
@@ -152,16 +177,16 @@ const SaleDetails: React.FC<SaleDetailsProps> = ({ show, handleClose, saleData }
         <div style={lineStyle}>
           <span style={labelStyle}>Productos:</span>
           <ul>
-            {salesProductsData && salesProductsData.length > 0 ? (
-              salesProductsData.map((product, index) => (
-                <li key={index}>{product.name} - Cantidad: </li>
+            {allProductResponses && allProductResponses.length > 0 ? (
+              allProductResponses.map((product) => (
+                <li key={product.sku}>{product.name} - Cantidad: </li>
               ))
             ) : (
               <p>No hay productos disponibles para esta venta.</p>
             )}
           </ul>
         </div>
-      </Modal.Body>
+        </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Cerrar

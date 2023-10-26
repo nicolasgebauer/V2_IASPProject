@@ -23,7 +23,6 @@ export default function Products() {
       <h2>Productos</h2>
       <div className="container-table"><ProductsTable /></div>
       </div>
-    
   )
 }
 

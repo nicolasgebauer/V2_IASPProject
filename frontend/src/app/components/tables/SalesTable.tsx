@@ -65,9 +65,6 @@ const SalesTable = () => {
       });
   }, []);
 
-  const openSaleDetailsModal = () => {
-    setIsSaleDetailsOpen(true);
-  };
 
   const handleAssignWarehouse = (saleId: number) => {
 
