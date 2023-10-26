@@ -136,7 +136,9 @@ const Sidebar = ({}) => {
           <h1><BsFileBarGraph /></h1><h1>  Dashboard</h1>
         </div>
         <div className="icon">
+          <Link href="/sales">
           <h1><SiHomeassistantcommunitystore /></h1><h1>  Minorista</h1>
+          </Link>
         </div>
         <div className="dropdown-mantenedores" onClick={toggleMantainersSubitems}>
           <div className="icon"><h1><BsCardList /> </h1><h1> Mantenedores</h1><h2><BiSolidDownArrow /></h2></div>
