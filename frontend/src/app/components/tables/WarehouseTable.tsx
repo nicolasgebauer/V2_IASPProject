@@ -50,7 +50,7 @@ const WarehousesTable = () => {
         .catch(error => {
             console.error('Error al obtener datos de la API: Warehouses', error);
         });
-    }, [warehouseData]);
+    }, []);
 
     return (
         <TableContainer>

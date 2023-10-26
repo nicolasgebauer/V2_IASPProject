@@ -63,7 +63,7 @@ const IntegrationTable = () => {
         .catch(error => {
             console.error('Error al obtener datos de la API', error);
         });
-    }, [integrationData]);
+    }, []);
 
     return (
     <div>
