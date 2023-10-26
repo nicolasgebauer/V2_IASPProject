@@ -1,0 +1,64 @@
+{
+  "sku": "A12345",
+  "parentsku": "A123",
+  "size": "M",
+  "gender": "male",
+  "price": 50.00,
+  "cost": 30.00,
+  "codebar": "7891234567890",
+  "name": "Blue T-Shirt",
+  "category": "clothing",
+  "removed": 0
+}
+
+{
+  "sku": "B67890",
+  "parentsku": "B678",
+  "size": "L",
+  "gender": "female",
+  "price": 75.00,
+  "cost": 50.00,
+  "codebar": "4567890123456",
+  "name": "Red Dress",
+  "category": "clothing",
+  "removed": 0
+}
+
+{
+  "sku": "C11121",
+  "parentsku": "C111",
+  "size": "8",
+  "gender": "unisex",
+  "price": 90.00,
+  "cost": 60.00,
+  "codebar": "1234567890123",
+  "name": "Sport Shoes",
+  "category": "footwear",
+  "removed": 0
+}
+
+{
+  "sku": "D23232",
+  "parentsku": "D232",
+  "size": "XL",
+  "gender": "male",
+  "price": 40.00,
+  "cost": 25.00,
+  "codebar": "9876543210987",
+  "name": "Green Polo",
+  "category": "clothing",
+  "removed": 0
+}
+
+{
+  "sku": "E45454",
+  "parentsku": "E454",
+  "size": "S",
+  "gender": "female",
+  "price": 65.00,
+  "cost": 40.00,
+  "codebar": "6543210987654",
+  "name": "Black Skirt",
+  "category": "clothing",
+  "removed": 0
+}
