@@ -1,6 +1,14 @@
 version: '3.8'
 
 services:
+  db:
+    image: postgres:13.12
+    environment:
+      POSTGRES_USER: fastapi_user
+      POSTGRES_PASSWORD: fastapi_password
+      POSTGRES_DB: fastapi_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
@@ -13,20 +21,21 @@ services:
       - "9300:9300"
     volumes:
       - esdata:/usr/share/elasticsearch/data
-
+      
   product-api:
     build: ./ProductMS
     ports:
       - "8000:8000"
     depends_on:
       - db
+      - elasticsearch
     environment:
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
 
   warehouse-api:
     build: ./WarehouseMS
     ports:
-      - "8001:8001"  # Cambia el puerto externo para evitar conflictos
+      - "8001:8001"
     depends_on:
       - db
       - product-api
@@ -36,7 +45,7 @@ services:
   inventory-api:
     build: ./InventoryMS
     ports:
-      - "8002:8002"  # Cambia el puerto externo para evitar conflictos
+      - "8002:8002"
     depends_on:
       - db
       - warehouse-api
@@ -46,7 +55,7 @@ services:
   integration-api:
     build: ./IntegrationMS
     ports:
-      - "8003:8003"  # Cambia el puerto externo para evitar conflictos
+      - "8003:8003"
     depends_on:
       - db
       - inventory-api
@@ -66,13 +75,11 @@ services:
     env_file:
       - ./frontend/.env
     container_name: frontend-dev
-    depends_on:
-      - db
 
   sale-api:
     build: ./SaleMS
     ports:
-      - "8004:8004"  # Cambia el puerto externo para evitar conflictos
+      - "8004:8004"
     depends_on:
       - db
       - integration-api
@@ -87,15 +94,6 @@ services:
       - "8080:8080"
     depends_on:
       - frontend
-  
-  db:
-    image: postgres:13.12
-    environment:
-      POSTGRES_USER: fastapi_user
-      POSTGRES_PASSWORD: fastapi_password
-      POSTGRES_DB: fastapi_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:

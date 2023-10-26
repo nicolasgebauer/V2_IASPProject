@@ -59,9 +59,8 @@ def update_product_route(sku: str, product_data: Product, db: Session = Depends(
         raise HTTPException(status_code=404, detail="Product not found")
     return updated_product
 
-@app.delete("/products/{sku}", response_model=Product)
-def delete_product_route(sku: str, db: Session = Depends(get_db)):
-    deleted_product = delete_product(db, sku)
-    if not deleted_product:
-        raise HTTPException(status_code=404, detail="Product not found")
-    return deleted_product
+@app.delete("/products/{id}/")
+async def delete_product_id(id: int = id, db: Session = Depends(get_db)):
+    product = delete_product(db, id=id)
+    return {}
+

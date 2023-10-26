@@ -64,9 +64,9 @@ def update_product(db: Session, sku: str, product_data):
     index_product(db_product.id, db_product)  # Pasar el objeto directamente
     return db_product
 
-def delete_product(db: Session, sku: str):
-    db_product = db.query(ProductORM).filter(ProductORM.id == sku).first()
+def delete_product(db: Session, id: int):
+    db_product = db.query(ProductORM).get(id)
     db.delete(db_product)
     db.commit()
-    delete_product_from_index(sku)
+    delete_product_from_index(id)
     return db_product

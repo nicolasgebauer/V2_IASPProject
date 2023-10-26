@@ -58,15 +58,6 @@ interface Product {
       fetchProducts();
     }, []);
 
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(apiUrl);
-        setProductData(response.data as Product[]);
-      } catch (error) {
-        console.error('Error al obtener datos de la API', error);
-      }
-    }
-
     const handleSearch = async () => {
       if (searchTerm === "") {
         fetchProducts();
@@ -77,6 +68,15 @@ interface Product {
         } catch (error) {
           console.error('Error al buscar productos', error);
         }
+      }
+    }
+
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(apiUrl);
+        setProductData(response.data as Product[]);
+      } catch (error) {
+        console.error('Error al obtener datos de la API', error);
       }
     }
 
