@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends, Query
 from typing import List
 from sqlalchemy.orm import Session
 from .database import InventoryORM, engine, SessionLocal
@@ -70,9 +70,17 @@ def get_inventory_by_warehouse_and_product_route(warehouse_id: int, product_id: 
 def get_inventory_by_warehouse_route(warehouse_id: int, db: Session = Depends(get_db)):
     return get_inventory_by_warehouse(db, warehouse_id)
 
-@app.post("/inventorys/chck_sale", response_model=List[int])
-def check_warehouses_for_sale_route(sale_products: List[dict], db: Session = Depends(get_db)):
-    return check_warehouses_for_sale(db, sale_products)
+@app.get("/inventorys/chck_sale/{sale_products}", response_model=List[int])
+def check_warehouses_for_sale_route(sale_products: str, db: Session = Depends(get_db)):
+    import json
+    try:
+        sale_products = json.loads(sale_products)
+        if not isinstance(sale_products, list):
+            raise ValueError("sale_products debe ser una lista.")
+        return check_warehouses_for_sale(db, sale_products)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="sale_products debe ser una lista de diccionarios en formato JSON.")
+
 
 @app.post("/inventorys/update_sale", response_model=List[Inventory])
 def update_inventory_by_sale_route( warehouse_id: int,sale_products: List[dict], db: Session = Depends(get_db)):
