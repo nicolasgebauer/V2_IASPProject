@@ -40,6 +40,22 @@ services:
     environment:
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
 
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/package.json:/app/package.json
+    ports:
+      - 3000:3000
+    env_file:
+      - ./frontend/.env
+    container_name: frontend-dev
+    depends_on:
+      - db
+
   sale-api:
     build: ./SaleMS
     ports:
@@ -50,6 +66,15 @@ services:
     environment:
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
 
+  frontend-nginx:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - frontend
+  
   db:
     image: postgres:13.12
     environment:

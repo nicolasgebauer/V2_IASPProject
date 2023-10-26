@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: warehouse-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: warehouse-api
+  template:
+    metadata:
+      labels:
+        app: warehouse-api
+    spec:
+      containers:
+      - name: warehouse-api
+        image: jorgepdlr/iaps_v2:v2_iaspproject-warehouse-api
+        ports:
+        - containerPort: 8001
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: warehouse-api-service
+spec:
+  selector:
+    app: warehouse-api
+  ports:
+    - protocol: TCP
+      port: 8001
+      targetPort: 8001
+  type: NodePort

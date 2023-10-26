@@ -3,9 +3,20 @@ from typing import List
 from sqlalchemy.orm import Session
 from .database import IntegrationORM, engine, SessionLocal
 from .crud import create_integration, get_integration, get_integrations, update_integration, delete_integration
-from .models import Integration
+from .models import Integration, IntegrationSerializer
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Crear tablas en la base de datos
 IntegrationORM.__table__.create(bind=engine, checkfirst=True)
@@ -19,7 +30,7 @@ def get_db():
         db.close()
 
 @app.post("/integrations/", response_model=Integration)
-def create_integration_route(integration: Integration, db: Session = Depends(get_db)):
+def create_integration_route(integration: IntegrationSerializer, db: Session = Depends(get_db)):
     return create_integration(db, integration)
 
 @app.get("/integrations/{integration_id}", response_model=Integration)
