@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { darkTheme } from '../../styles/theme';
 const {nextui} = require("@nextui-org/react");
 import Link from 'next/link';
-import './../products/products.css'; 
+import '../../products/products.css'; 
 const apiUrl = 'http://localhost:8003/integrations/';
 
 const TableContainer = styled.div`
