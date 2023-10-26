@@ -2,7 +2,7 @@
 "use client";
 import { useState } from 'react';
 import styled, { css } from "styled-components";
-import { darkTheme } from "../styles/theme";
+import { darkTheme } from "../../styles/theme";
 import { BsFileBarGraph } from 'react-icons/bs';
 import {AiOutlineHome} from 'react-icons/ai';
 import {SiHomeassistantcommunitystore} from 'react-icons/si';
@@ -83,11 +83,11 @@ const SidebarWrapper = styled.div`
     margin-left: 0rem;
     margin-top: 0rem;
     font-family: ${darkTheme.font}, sans-serif;
-    color: ${darkTheme.white};
+
 
   }
   .subitem{
-    color: ${darkTheme.white};
+ 
     margin-left: 4rem;
     margin-top: 0rem;
     font-size: 1.2rem;
@@ -112,50 +112,66 @@ const SidebarWrapper = styled.div`
 
 
 const Sidebar = ({}) => {
-  const [showSubitems, setShowSubitems] = useState(false);
-  const toggleSubitems = () => {
-    setShowSubitems(!showSubitems);
+  const [showMantainersSubitems, setShowMantainersSubitems] = useState(false);
+  const [showGeneralSubitems, setShowGeneralSubitems] = useState(false);
+
+  const toggleMantainersSubitems = () => {
+    setShowMantainersSubitems(!showMantainersSubitems);
+    setShowGeneralSubitems(false); 
+  };
+
+  const toggleGeneralSubitems = () => {
+    setShowGeneralSubitems(!showGeneralSubitems);
+    setShowMantainersSubitems(false); 
   };
   return (
     <SidebarWrapper>
-    <Line />
-    <Line />
-    <Stack gap={5}>
-      <div className="icon">
-        <h1><AiOutlineHome /></h1> <h1>Inicio</h1>
-      </div>
-      <div className="icon">
-        <h1><BsFileBarGraph /></h1><h1>  Dashboard</h1> 
-      </div>
-      <div className="icon">
-        <h1><SiHomeassistantcommunitystore/></h1><h1>  Minorista</h1>
-      </div>
-      <Link href="/products">
+      <Line />
+      <Line />
+      <Stack gap={5}>
         <div className="icon">
-          <h1><MdMapsHomeWork/></h1> <h1>Mantenedores</h1>
+          <h1><AiOutlineHome /></h1> <h1>Inicio</h1>
         </div>
-      </Link>
-      <div className="item1" onClick={toggleSubitems}>
-        
-          <div className="icon"><h1><BsCardList/> </h1><h1> General</h1><h2><BiSolidDownArrow/></h2></div>
-            <div className="sub-items">
-              {showSubitems && (
-                <div className="list-subitems">
-                  <Link href="/products">
-                    <div className="subitem">Productos</div>
-                  </Link>
-                  <Link href="/inventory">
-                    <div className="subitem">Inventario</div>
-                  </Link>
-                </div>
-              )}
-            </div>
+        <div className="icon">
+          <h1><BsFileBarGraph /></h1><h1>  Dashboard</h1>
+        </div>
+        <div className="icon">
+          <h1><SiHomeassistantcommunitystore /></h1><h1>  Minorista</h1>
+        </div>
+        <div className="dropdown-mantenedores" onClick={toggleMantainersSubitems}>
+          <div className="icon"><h1><BsCardList /> </h1><h1> Mantenedores</h1><h2><BiSolidDownArrow /></h2></div>
+          <div className="sub-items">
+            {showMantainersSubitems && (
+              <div className="list-subitems">
+                <Link href="/warehouses">
+                  <div className="subitem">Bodega</div>
+                </Link>
+                <Link href="/integrations">
+                  <div className="subitem">Integraciones</div>
+                </Link>
+              </div>
+            )}
           </div>
-        
-    
-    </Stack>
+        </div>
+        <div className="dropdown-general" onClick={toggleGeneralSubitems}>
+          <div className="icon"><h1><BsCardList /> </h1><h1> General</h1><h2><BiSolidDownArrow /></h2></div>
+          <div className="sub-items">
+            {showGeneralSubitems && (
+              <div className="list-subitems">
+                <Link href="/products">
+                  <div className="subitem">Productos</div>
+                </Link>
+                <Link href="/inventory">
+                  <div className="subitem">Inventario</div>
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      </Stack>
     </SidebarWrapper>
   );
 };
+
 
 export default Sidebar;

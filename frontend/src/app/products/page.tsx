@@ -2,13 +2,15 @@
 
 
 "use client";
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Navbar from '../components/general/Navbar';
+import Sidebar from '../components/general/Sidebar';
 import "./../globals.css"
-import ProductsTable from '../components/ProductTable';
+import ProductsTable from '../components/tables/ProductTable';
 import Link from 'next/link';
 import "./products.css";
 import {NextUIProvider} from "@nextui-org/react";
+import CreateProduct from '../components/create/ProductModal';
+import AddProductsFromCSV from '../components/AddProductsFile';
 
 export default function Products() {
   return (
@@ -16,11 +18,11 @@ export default function Products() {
       <Navbar /> 
 
       <Sidebar/>
+      <div className="container-modal"><CreateProduct/></div>
+      <div className="container-modal"><AddProductsFromCSV/></div>
       <h2>Productos</h2>
-        <ProductsTable />
-        
+      <div className="container-table"><ProductsTable /></div>
       </div>
-    
   )
 }
 

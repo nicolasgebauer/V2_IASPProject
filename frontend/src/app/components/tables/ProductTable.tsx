@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import styled from 'styled-components';
-import { darkTheme } from '../styles/theme';
+import { darkTheme } from '../../styles/theme';
 const {nextui} = require("@nextui-org/react");
 
 
@@ -56,7 +56,7 @@ interface Product {
 
     useEffect(() => {
       fetchProducts();
-    }, []);
+    }, [productData]);
 
     const fetchProducts = async () => {
       try {
@@ -103,7 +103,6 @@ interface Product {
               <th>Costo</th>
               <th>Código de Barras</th>
               <th>Categoría</th>
-              <th>Eliminado</th>
             </tr>
           </thead>
           <tbody>
@@ -117,7 +116,6 @@ interface Product {
                 <td>{product.cost}</td>
                 <td>{product.codebar}</td>
                 <td>{product.category}</td>
-                <td>{product.removed}</td>
               </tr>
             ))}
           </tbody>

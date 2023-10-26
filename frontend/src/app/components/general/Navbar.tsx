@@ -1,12 +1,13 @@
 
 "use client";
 import styled from 'styled-components';
-import { darkTheme } from '../styles/theme';
+import { darkTheme } from '../../styles/theme';
 import Link from 'next/link';
 import { FaUserAlt } from 'react-icons/fa';
-import sendDataToAPI from './../functions/POSTData';
+import sendDataToAPI from '../../functions/POSTDataProduct';
 import Stack from 'react-bootstrap/Stack';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import sendDataToAPIProduct from '../../functions/POSTDataProduct';
 
 const Wrapper = styled.div`
   background:${darkTheme.darkBlue};
@@ -62,9 +63,7 @@ const Wrapper = styled.div`
 `;
 
 const Navbar = () => {
-  const handleSendDataClick = () => {
-    sendDataToAPI();
-  };
+
   return (
    <Wrapper>
       <Stack direction="horizontal" gap={3}>
@@ -82,13 +81,7 @@ const Navbar = () => {
            <FaUserAlt />
           </Link>
         </div>
-        <div className="p-2"> 
-          <ul>
-            <div className="icon">
-              <button onClick={handleSendDataClick}>Enviar Datos</button>
-            </div>
-          </ul>
-        </div>
+
       </Stack>
     </Wrapper>
 

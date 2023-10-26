@@ -18,7 +18,7 @@ class ProductORM(Base):
     __tablename__ = "products"
 
     id = Column(Integer, primary_key=True, index=True)
-    sku = Column(String, index=True)
+    sku = Column(String, index=True, unique=True)
     parentsku = Column(String, index=True)
     size = Column(String)
     gender = Column(String)

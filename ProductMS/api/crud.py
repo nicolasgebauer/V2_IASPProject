@@ -41,13 +41,6 @@ def search_product(query_string):
 
 
 # Tus funciones CRUD...
-
-def get_product(db: Session, product_id: int):
-    return db.query(ProductORM).filter(ProductORM.id == product_id).first()
-
-def get_products(db: Session, skip: int = 0, limit: int = 10):
-    return db.query(ProductORM).offset(skip).limit(limit).all()
-
 def create_product(db: Session, product):
     db_product = ProductORM(**product.dict())
     db.add(db_product)
@@ -56,17 +49,24 @@ def create_product(db: Session, product):
     index_product(db_product.id, db_product)  # Pasar el objeto directamente
     return db_product
 
-def update_product(db: Session, product_id: int, product_data):
-    db_product = db.query(ProductORM).filter(ProductORM.id == product_id).first()
+
+def get_product(db: Session, sku: str):
+    return db.query(ProductORM).filter(ProductORM.sku == sku).first()
+
+def get_products(db: Session):
+    return db.query(ProductORM).all()
+
+def update_product(db: Session, sku: str, product_data):
+    db_product = db.query(ProductORM).filter(ProductORM.sku == sku).first()
     for key, value in product_data.dict().items():
         setattr(db_product, key, value)
     db.commit()
     index_product(db_product.id, db_product)  # Pasar el objeto directamente
     return db_product
 
-def delete_product(db: Session, product_id: int):
-    db_product = db.query(ProductORM).filter(ProductORM.id == product_id).first()
+def delete_product(db: Session, sku: str):
+    db_product = db.query(ProductORM).filter(ProductORM.id == sku).first()
     db.delete(db_product)
     db.commit()
-    delete_product_from_index(product_id)
+    delete_product_from_index(sku)
     return db_product

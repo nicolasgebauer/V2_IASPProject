@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sale-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sale-api
+  template:
+    metadata:
+      labels:
+        app: sale-api
+    spec:
+      containers:
+      - name: sale-api
+        image: jorgepdlr/iaps_v2:v2_iaspproject-sale-api
+        ports:
+        - containerPort: 8004
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sale-api-service
+spec:
+  selector:
+    app: sale-api
+  ports:
+    - protocol: TCP
+      port: 8004
+      targetPort: 8004
+  type: NodePort

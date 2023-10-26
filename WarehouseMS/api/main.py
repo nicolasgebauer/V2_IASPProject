@@ -3,9 +3,21 @@ from typing import List
 from sqlalchemy.orm import Session
 from .database import SessionLocal, engine, WarehouseORM
 from .crud import create_warehouse, get_warehouse, get_warehouses, update_warehouse, delete_warehouse
-from .models import Warehouse
+from .models import Warehouse, WarehouseSerializer
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
+
 
 # Crear tablas en la base de datos
 WarehouseORM.__table__.create(bind=engine, checkfirst=True)
@@ -19,7 +31,7 @@ def get_db():
         db.close()
 
 @app.post("/warehouses/", response_model=Warehouse)
-def create_warehouse_route(warehouse: Warehouse, db: Session = Depends(get_db)):
+def create_warehouse_route(warehouse: WarehouseSerializer, db: Session = Depends(get_db)):
     return create_warehouse(db, warehouse)
 
 @app.get("/warehouses/{warehouse_id}", response_model=Warehouse)

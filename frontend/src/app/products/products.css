@@ -15,9 +15,22 @@ h2{
     font-weight: bold;
     font-size: large;
     color: black;
-    background-color: white;
+ 
 }
 
 .container-fluid{
     background-color: white;
+}
+
+.modal{
+    background-color: black;
+}
+
+.container-modal{
+    margin-left: 210px;
+    margin-top:10px;
+    margin-bottom: 30px;
+}
+.container-table{
+    margin-left: 180px;
 }
