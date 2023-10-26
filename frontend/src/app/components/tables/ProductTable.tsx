@@ -48,27 +48,57 @@ interface Product {
   category: string;
   removed: number;
 }
-
   
   const ProductsTable = () => {
     
     const [productData, setProductData] = useState<Product[]>([]);
-
+    const [searchTerm, setSearchTerm] = useState<string>("");
 
     useEffect(() => {
-      axios.get('http://localhost:8000/products')
-        .then(response => {
+      fetchProducts();
+    }, []);
+
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(apiUrl);
+        setProductData(response.data as Product[]);
+      } catch (error) {
+        console.error('Error al obtener datos de la API', error);
+      }
+    }
+
+    const handleSearch = async () => {
+      if (searchTerm === "") {
+        fetchProducts();
+      } else {
+        try {
+          const response = await axios.get(`http://localhost:8000/search?q=${searchTerm}`);
           setProductData(response.data as Product[]);
-        })
-        .catch(error => {
-          console.error('Error al obtener datos de la API', error);
-        });
-    }, [productData]);
+        } catch (error) {
+          console.error('Error al buscar productos', error);
+        }
+      }
+    }
 
     return (
       <TableContainer>
+        <div>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Buscar producto..."
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
+          />
+          <button onClick={handleSearch}>Buscar</button>
+        </div>
+
         <StyledTable>
-          <thead>
+        <thead>
             <tr>
               <th>SKU</th>
               <th>Nombre</th>
@@ -99,4 +129,5 @@ interface Product {
       </TableContainer>
     );
   };
-  export default ProductsTable;
+
+export default ProductsTable;

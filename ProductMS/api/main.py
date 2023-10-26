@@ -1,10 +1,12 @@
 from fastapi import FastAPI, HTTPException, Depends
 from typing import List
 from sqlalchemy.orm import Session
+from .crud import create_product, get_product, get_products, update_product, delete_product, search_product
+from .models import Product
 from .database import SessionLocal, engine, ProductORM
-from .crud import create_product, get_product, get_products, update_product, delete_product
 from .models import Product, ProductSerializer
 from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
@@ -17,6 +19,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/search/")
+async def search_products(q: str):
+    products = search_product(q)
+    return [hit["_source"] for hit in products]
+
 
 # Crear tablas en la base de datos
 ProductORM.__table__.create(bind=engine, checkfirst=True)
