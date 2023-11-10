@@ -165,3 +165,44 @@ __pycache__/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+
+
+
+# terraform 
+
+# Ignore Terraform state files
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# Ignore local .terraform directories
+**/.terraform/*
+**/.terraform/
+
+# Ignore override files as they are usually used to override resources locally and do not carry useful information
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore files with sensitive information
+*.pem
+*.pem.pub
+*.pem~
+*.key
+*.key.pub
+*.key~
+*.p12
+*.pfx
+
+# Ignore terraform auto-generated files
+**/terraform.auto.tfvars
+**/terraform.tfvars.json
+
