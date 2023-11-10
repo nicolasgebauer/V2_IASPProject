@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-api
+  template:
+    metadata:
+      labels:
+        app: product-api
+    spec:
+      containers:
+      - name: product-api
+        image: jorgepdlr/iaps_v2:v2_iaspproject-product-api
+        env:
+        - name: DATABASE_URL
+          value: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
+        ports:
+        - containerPort: 8000

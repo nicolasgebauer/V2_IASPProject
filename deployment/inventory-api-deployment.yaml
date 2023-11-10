@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-api
+  template:
+    metadata:
+      labels:
+        app: inventory-api
+    spec:
+      containers:
+      - name: inventory-api
+        image: jorgepdlr/iaps_v2:v2_iaspproject-inventory-api
+        env:
+        - name: DATABASE_URL
+          value: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
+        ports:
+        - containerPort: 8002

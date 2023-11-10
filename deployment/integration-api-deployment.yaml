@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: integration-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: integration-api
+  template:
+    metadata:
+      labels:
+        app: integration-api
+    spec:
+      containers:
+      - name: integration-api
+        image: jorgepdlr/iaps_v2:v2_iaspproject-integration-api
+        env:
+        - name: DATABASE_URL
+          value: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
+        ports:
+        - containerPort: 8003

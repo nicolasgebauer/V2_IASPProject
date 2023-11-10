@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: jorgepdlr/iaps_v2:v2_iaspproject-frontend-1 # Debes reemplazar esto con el nombre de la imagen que construiste para el frontend
+        ports:
+        - containerPort: 3000
