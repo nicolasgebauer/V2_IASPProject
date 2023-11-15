@@ -15,7 +15,7 @@ export default function Products() {
       <Sidebar/>
       <div className="container-modal"><CreateProduct/></div>
       <h2>Ventas</h2>
-      <div className="container-table"><SalesTable/></div>
+      <div className="container-table"><SalesTable /></div>
         
         
       </div>

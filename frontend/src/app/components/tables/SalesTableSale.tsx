@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { darkTheme } from './../../styles/theme';
 import Button from 'react-bootstrap/Button';
 import './table.css';
-import SaleDetails from '../SaleDetails';
+import AddProductSale from '../create/AddProductSale';
 import SaleProducts from '../SaleProductDetails';
-import AssignWarehouseModal from '../create/ValidateSale';
+
 const apiSalesUrl = 'http://localhost:8004/sales/';
-const apiSalesProductUrl = 'http://localhost:8004/sales_products/';
+
 
 
 const TableContainer = styled.div`
@@ -31,7 +31,6 @@ const ButtonContainer = styled.div`
 `;
 
 
-
 interface Sale {
   id: number;
   integration_id: number;
@@ -50,13 +49,11 @@ interface Sale {
   removed: number;
 }
 
-const SalesTable = () => {
+const SalesTableSale = () => {
   const [salesData, setSalesData] = useState<Sale[]>();
-  const [isSaleDetailsOpen, setIsSaleDetailsOpen] = useState(false);
-  const [selectedSaleData, setSelectedSaleData] = useState<Sale | undefined>();
   const [selectedSaleId, setSelectedSaleId] = useState<number | null>(null);
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [showProductsModal, setShowProductsModal] = useState(false);
-  const [showAssignWarehouseModal, setShowAssignWarehouseModal] = useState(false); 
 
   useEffect(() => {
     axios.get(apiSalesUrl)
@@ -68,19 +65,15 @@ const SalesTable = () => {
       });
   }, []);
 
+
   const handleViewProducts = async (saleId: number) => {
-    setSelectedSaleId(saleId);
-    setShowProductsModal(true);
+      setSelectedSaleId(saleId);
+      setShowProductsModal(true);
   };
 
-  const handleAssignWarehouse = (saleId: number) => {
+  const handleOpenAddProductModal = (saleId: number) => {
     setSelectedSaleId(saleId);
-    setShowAssignWarehouseModal(true); 
-  };
-
-  const handleViewDetails = (saleId: number, saleData: Sale) => {
-    setSelectedSaleData(saleData);
-    setIsSaleDetailsOpen(true);
+    setShowAddProductModal(true);
   };
 
   return (
@@ -106,32 +99,34 @@ const SalesTable = () => {
               <td>{sale.state}</td>
               <td>{sale.removed ? 'Sí' : 'No'}</td>
               <td>
-                <ButtonContainer>
-                <Button variant="outline-secondary" onClick={() => handleAssignWarehouse(sale.id)}>Asignar Bodega</Button>
-                  <Button variant="outline-secondary" onClick={() => handleViewDetails(sale.id, sale)}>Ver Detalles</Button>
-                  <Button 
+              <ButtonContainer>
+
+                    <>
+                    <Button 
+                      variant="outline-secondary" 
+                      onClick={() => handleOpenAddProductModal(sale.id)}
+                    >
+                      Agregar Producto
+                      </Button>
+                      <Button 
                         variant="outline-secondary" 
                         onClick={() => handleViewProducts(sale.id)}
                       >
                         Ver Productos
                       </Button>
+                    </>
+                  
                 </ButtonContainer>
               </td>
             </tr>
           ))}
         </tbody>
       </StyledTable>
-      {showProductsModal && <SaleProducts saleId={selectedSaleId || 0} />}
-      {showAssignWarehouseModal && (
-        <AssignWarehouseModal
-        show={showAssignWarehouseModal}
-          onClose={() => setShowAssignWarehouseModal(false)}
-          saleData={selectedSaleData}
-        />
-      )}
-      <SaleDetails show={isSaleDetailsOpen} handleClose={() => setIsSaleDetailsOpen(false)} saleData={selectedSaleData} />
+      
+      {showAddProductModal && <AddProductSale saleId={selectedSaleId || 0} />}
+      {showProductsModal && <SaleProducts saleId={selectedSaleId || 0 }/>}
     </TableContainer>
   );
 };
 
-export default SalesTable;
+export default SalesTableSale;
