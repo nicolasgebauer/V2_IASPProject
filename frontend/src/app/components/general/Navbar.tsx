@@ -4,10 +4,8 @@ import styled from 'styled-components';
 import { darkTheme } from '../../styles/theme';
 import Link from 'next/link';
 import { FaUserAlt } from 'react-icons/fa';
-import sendDataToAPI from '../../functions/POSTDataProduct';
 import Stack from 'react-bootstrap/Stack';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import sendDataToAPIProduct from '../../functions/POSTDataProduct';
 
 const Wrapper = styled.div`
   background:${darkTheme.darkBlue};

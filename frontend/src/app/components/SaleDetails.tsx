@@ -174,18 +174,6 @@ const SaleDetails: React.FC<SaleDetailsProps> = ({ show, handleClose, saleData }
           <span style={labelStyle}>Correo Electrónico del Cliente:</span>
           <p>{saleData?.client_email}</p>
         </div>
-        <div style={lineStyle}>
-          <span style={labelStyle}>Productos:</span>
-          <ul>
-            {allProductResponses && allProductResponses.length > 0 ? (
-              allProductResponses.map((product) => (
-                <li key={product.sku}>{product.name} - Cantidad: </li>
-              ))
-            ) : (
-              <p>No hay productos disponibles para esta venta.</p>
-            )}
-          </ul>
-        </div>
         </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

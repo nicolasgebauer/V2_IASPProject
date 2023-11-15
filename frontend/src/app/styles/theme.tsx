@@ -15,5 +15,7 @@ export const darkTheme = {
     lightBlue: "#DCFFFC",
     lightBrown:  "#4A3C30",
     darkBlue: "#395B5B",
+    orange: "#F7BE81",
+    lightGrey2: "#F2F2F2",
   };
   
