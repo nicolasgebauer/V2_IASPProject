@@ -27,6 +27,8 @@ interface SaleProductsProps {
   saleId: number;
 }
 
+
+
 const SaleProducts: React.FC<SaleProductsProps> = ({ saleId }) => {
   const [showProductsModal, setShowProductsModal] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
@@ -49,7 +51,6 @@ const SaleProducts: React.FC<SaleProductsProps> = ({ saleId }) => {
       });
   
       const productsData = await Promise.all(productPromises);
-      console.log(productsData);
       setProducts(productsData);
   
       setShowProductsModal(true); 

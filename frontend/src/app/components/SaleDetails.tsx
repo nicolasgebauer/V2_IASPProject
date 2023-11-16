@@ -65,45 +65,7 @@ const SaleDetails: React.FC<SaleDetailsProps> = ({ show, handleClose, saleData }
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   };
 
-  const [salesProductsData, setSalesProductsData] = useState<SalesProducts[]>();
-  const [allProductResponses, setAllProductResponses] = useState<Product[]>([]);
 
-  useEffect(() => {
-    axios.get(`${apiSalesProductsUrl}${saleData?.id}/products`)
-      .then(response => {
-        setSalesProductsData(response.data as SalesProducts[]);
-      })
-      .catch(error => {
-        console.error('Error al obtener datos de la API', error);
-      });
-  }, [saleData?.id]);
-
-  useEffect(() => {
-    if (salesProductsData && salesProductsData.length > 0) {
-      const productRequests = salesProductsData.map((product) => {
-        const productEndpoint = `http://localhost:8000/products/${product.product_id}`;
-        return axios.get(productEndpoint)
-          .then((response) => response.data as Product)
-          .catch((error) => {
-            console.error('Error al obtener datos de la API', error);
-            return null;
-          });
-      });
-
-      Promise.all(productRequests)
-        .then((responses) => {
-          setAllProductResponses(responses.filter((response) => response !== null) as Product[]);
-        });
-    }
-  }, [salesProductsData]);
-
-  // Efecto para limpiar las listas cuando se cierra el modal
-  useEffect(() => {
-    if (!show) {
-      setSalesProductsData([]);
-      setAllProductResponses([]);
-    }
-  }, [show]);
 
   return (
     <Modal

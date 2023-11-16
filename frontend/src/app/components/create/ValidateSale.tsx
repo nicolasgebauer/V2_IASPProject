@@ -46,138 +46,105 @@ interface Inventory {
   amount: number;
 }
 
-interface AssignWarehouseModalProps {
+interface AssignWarehouseModalProps  {
   show: boolean;
-  onClose: () => void;
+  handleClose: () => void;
   saleData?: Sale;
 }
 
-const AssignWarehouseModal: React.FC<AssignWarehouseModalProps> = ({
-  show,
-  onClose,
-  saleData,
-}) => {
-  const [salesProducts, setSalesProducts] = useState<SalesProducts[]>([]);
-  const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
-  const [inventory, setInventory] = useState<Inventory[]>([]);
-  const [eligibleWarehouses, setEligibleWarehouses] = useState<Warehouse[]>([]);
-  const [selectedWarehouse, setSelectedWarehouse] = useState<Warehouse | null>(
-    null
-  );
-  const [showSelectWarehouseModal, setShowSelectWarehouseModal] = useState<
-    boolean
-  >(false);
-  const [showNoEligibleWarehousesMessage, setShowNoEligibleWarehousesMessage] =
-    useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchSalesProducts = async () => {
-      if (saleData) {
-        try {
-          const response = await axios.get(
-            `http://localhost:8004/sales/${saleData.id}/products`
-          );
-          const salesProductsData = response.data as SalesProducts[];
-          setSalesProducts(salesProductsData);
-        } catch (error) {
-          console.error('Error al obtener salesProducts:', error);
-        }
-      }
-    };
-
-    const fetchWarehouses = async () => {
-      try {
-        const response = await axios.get('http://localhost:8001/warehouses/');
-        const warehousesData = response.data as Warehouse[];
-        setWarehouses(warehousesData);
-      } catch (error) {
-        console.error('Error al obtener almacenes:', error);
-      }
-    };
-
-    const fetchInventory = async () => {
-      try {
-        const response = await axios.get('http://localhost:8002/inventorys/');
-        const inventoryData = response.data as Inventory[];
-        setInventory(inventoryData);
-      } catch (error) {
-        console.error('Error al obtener inventario:', error);
-      }
-    };
-
-    fetchSalesProducts();
-    fetchWarehouses();
-    fetchInventory();
-  }, [saleData]);
-
-  useEffect(() => {
-    const eligibleWarehousesData = warehouses.filter((warehouse) => {
-      return salesProducts.every((product) => {
-        const productInventory = inventory.find(
-          (item) =>
-            item.product_id === product.product_id &&
-            String(item.warehouse_id) === warehouse.id
-        );
-
-        return productInventory && productInventory.amount >= product.count;
-      });
-    });
-
-    setEligibleWarehouses(eligibleWarehousesData);
-
-    if (eligibleWarehousesData.length > 0) {
-      setShowSelectWarehouseModal(true);
-      setShowNoEligibleWarehousesMessage(false);
-    } else {
-      setShowSelectWarehouseModal(false);
-      setShowNoEligibleWarehousesMessage(true);
-    }
-  }, [salesProducts, warehouses, inventory]);
-
-  const handleSelectWarehouse = (warehouse: Warehouse) => {
-    setSelectedWarehouse(warehouse);
-    setShowSelectWarehouseModal(false);
+const AssignWarehouseModal: React.FC<AssignWarehouseModalProps > = ({ show, handleClose, saleData }) => {
+  const modalStyle = {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   };
 
-  return (
-    <>
-      <Modal
-        show={showSelectWarehouseModal}
-        onHide={() => setShowSelectWarehouseModal(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Seleccione una bodega</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            {eligibleWarehouses.map((warehouse) => (
-              <Form.Check
-                key={warehouse.id}
-                type="radio"
-                label={warehouse.name}
-                name="warehouse"
-                id={`warehouse-${warehouse.id}`}
-                onChange={() => handleSelectWarehouse(warehouse)}
-              />
-            ))}
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowSelectWarehouseModal(false)}
-          >
-            Cancelar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+  const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
+  const [eligibleWarehouses, setEligibleWarehouses] = useState<Warehouse[]>([]);
 
-      {showNoEligibleWarehousesMessage && (
-        <div>
-          <p>Ninguna bodega cumple con el inventario necesario.</p>
-        </div>
-      )}
-    </>
+  const [showSelectWarehouseModal, setShowSelectWarehouseModal] = useState<boolean>(false);
+  const [showNoEligibleWarehousesMessage, setShowNoEligibleWarehousesMessage] = useState<boolean>(false);
+  const [salesProducts, setSalesProducts] = useState<SalesProducts[]>([]);
+  const [inventory, setInventory] = useState<Inventory[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Obtener productos de la venta
+        const salesProductsResponse = await axios.get(`http://localhost:8004/sales/${saleData?.id}/products`);
+        const salesProductsData = salesProductsResponse.data as SalesProducts[];
+        setSalesProducts(salesProductsData);
+
+        // Obtener inventario
+        const inventoryResponse = await axios.get('http://localhost:8002/inventorys/');
+        const inventoryData = inventoryResponse.data as Inventory[];
+        setInventory(inventoryData);
+
+        // Obtener lista de bodegas
+        const warehousesResponse = await axios.get('http://localhost:8001/warehouses/');
+        const warehousesData = warehousesResponse.data as Warehouse[];
+        setWarehouses(warehousesData);
+
+        // Verificar inventario para cada producto de salesProducts
+        const eligibleWarehousesData: Warehouse[] = [];
+        salesProductsData.forEach((product) => {
+          const matchingInventory = inventory.filter(
+            (item) =>
+              item.product_id === product.product_id &&
+              item.amount >= product.count
+          );
+
+          // Obtener id de bodegas que cumplen con el inventario
+          const matchingWarehouseIds = matchingInventory.map((item) => item.warehouse_id);
+
+          // Filtrar las bodegas elegibles que cumplen con todos los productos
+          const warehousesForProduct = warehousesData.filter((warehouse) =>
+            matchingWarehouseIds.includes(Number(warehouse.id))
+          );
+
+          eligibleWarehousesData.push(...warehousesForProduct);
+        });
+
+        // Eliminar duplicados
+        const uniqueEligibleWarehouses = Array.from(new Set(eligibleWarehousesData));
+
+        setEligibleWarehouses(uniqueEligibleWarehouses);
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+      }
+    };
+
+    if (saleData?.id) {
+      fetchData();
+    }
+  }, [saleData]);
+
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Resultado de asignación de bodega</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {eligibleWarehouses.length > 0 ? (
+          <div>
+            <h3>Bodegas que cumplen con los requisitos:</h3>
+            <ul>
+              {eligibleWarehouses.map((warehouse) => (
+                <li key={warehouse.id}>{`Bodega ID: ${warehouse.id}, Nombre: ${warehouse.name}`}</li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div>
+            <p>Ninguna bodega cumple con los requisitos.</p>
+          </div>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Cerrar
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
