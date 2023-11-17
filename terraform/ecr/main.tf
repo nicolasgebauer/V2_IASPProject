@@ -1,9 +1,8 @@
-resource "aws_ecr_repository" "hopesolutions_repository" {
+resource "aws_ecr_repository" "hopesolutions" {
   name = var.aws_repository_name
 
-  image_tag_mutability = "MUTABLE"  # Esto permite sobrescribir las imágenes en el repositorio
+  image_tag_mutability = "MUTABLE"
 
-  # Política de retención para eliminar imágenes antiguas (ajusta según tus necesidades)
   image_scanning_configuration {
     scan_on_push = true
   }
@@ -12,4 +11,12 @@ resource "aws_ecr_repository" "hopesolutions_repository" {
     Terraform   = "true"
     Environment = "production"
   }
+
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+output "ecr_repository_url" {
+  value = aws_ecr_repository.hopesolutions.repository_url
 }

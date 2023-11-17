@@ -1,5 +1,3 @@
-# variables.tf
-
 variable "aws_access_key" {
   type    = string
 }
@@ -70,4 +68,20 @@ variable "aws_subnet_d_private_id" {
 
 variable "aws_security_group_id" {
   type    = string
+}
+
+variable "ecs_cluster_name" {
+  type    = string
+}
+
+variable "ecs_task_family" {
+  type    = string
+}
+
+variable "ecs_service_name" {
+  type    = string
+}
+
+variable "ecs_desired_count" {
+  type    = number
 }
