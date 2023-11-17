@@ -56,7 +56,7 @@ const SalesTable = () => {
   const [selectedSaleData, setSelectedSaleData] = useState<Sale | undefined>();
   const [selectedSaleId, setSelectedSaleId] = useState<number | null>(null);
   const [showProductsModal, setShowProductsModal] = useState(false);
-  const [showAssignWarehouseModal, setShowAssignWarehouseModal] = useState(false); 
+  const [isAssignWarehouseModalOpen, setAssignWarehouseModal] = useState(false); 
 
   useEffect(() => {
     axios.get(apiSalesUrl)
@@ -73,15 +73,18 @@ const SalesTable = () => {
     setShowProductsModal(true);
   };
 
-  const handleAssignWarehouse = (saleId: number) => {
-    setSelectedSaleId(saleId);
-    setShowAssignWarehouseModal(true); 
-  };
 
   const handleViewDetails = (saleId: number, saleData: Sale) => {
     setSelectedSaleData(saleData);
     setIsSaleDetailsOpen(true);
   };
+
+  const handleAssignWarehouse = (saleId: number, saleData: Sale) => {
+    setSelectedSaleData(saleData);
+    setAssignWarehouseModal(true);
+  };
+
+
 
   return (
     <TableContainer>
@@ -90,10 +93,9 @@ const SalesTable = () => {
           <tr>
             <th>ID</th>
             <th>Fecha</th>
-            <th>Cantidad de Productos</th>
             <th>Precio Total</th>
             <th>Estado</th>
-            <th>Acciones</th>
+  
           </tr>
         </thead>
         <tbody>
@@ -101,13 +103,11 @@ const SalesTable = () => {
             <tr key={sale.id}>
               <td>{sale.id}</td>
               <td>{sale.date}</td>
-              <td>{sale.amount_products}</td>
               <td>${sale.total_price ? sale.total_price.toFixed(2) : 'N/A'}</td>
               <td>{sale.state}</td>
-              <td>{sale.removed ? 'Sí' : 'No'}</td>
               <td>
                 <ButtonContainer>
-                <Button variant="outline-secondary" onClick={() => handleAssignWarehouse(sale.id)}>Asignar Bodega</Button>
+                <Button variant="outline-secondary" onClick={() => handleAssignWarehouse(sale.id, sale)}>Asignar Bodega</Button>
                   <Button variant="outline-secondary" onClick={() => handleViewDetails(sale.id, sale)}>Ver Detalles</Button>
                   <Button 
                         variant="outline-secondary" 
@@ -122,14 +122,8 @@ const SalesTable = () => {
         </tbody>
       </StyledTable>
       {showProductsModal && <SaleProducts saleId={selectedSaleId || 0} />}
-      {showAssignWarehouseModal && (
-        <AssignWarehouseModal
-        show={showAssignWarehouseModal}
-          onClose={() => setShowAssignWarehouseModal(false)}
-          saleData={selectedSaleData}
-        />
-      )}
       <SaleDetails show={isSaleDetailsOpen} handleClose={() => setIsSaleDetailsOpen(false)} saleData={selectedSaleData} />
+      <AssignWarehouseModal show={isAssignWarehouseModalOpen} handleClose={() => setAssignWarehouseModal(false)} saleData={selectedSaleData} />
     </TableContainer>
   );
 };

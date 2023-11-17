@@ -29,7 +29,7 @@ interface SaleProductsProps {
 
 const SaleProducts: React.FC<SaleProductsProps> = ({ saleId }) => {
   const [showProductsModal, setShowProductsModal] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<{ product: Product; count: number; }[]>([]);
   const modalStyle = {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   };
@@ -38,20 +38,22 @@ const SaleProducts: React.FC<SaleProductsProps> = ({ saleId }) => {
     try {
       const response = await axios.get(`http://localhost:8004/sales/${saleId}/products`);
       const salesProducts = response.data as SalesProducts[];
-  
-      
+
       const productPromises = salesProducts.map(async (sp) => {
-        
         const productIdString = String(sp.product_id).padStart(3, '0');
-        
+
+    
         const productResponse = await axios.get(`http://localhost:8000/products/${productIdString}`);
-        return productResponse.data as Product;
+        
+        return {
+          product: productResponse.data as Product,
+          count: sp.count,
+        };
       });
-  
+
       const productsData = await Promise.all(productPromises);
-      console.log(productsData);
       setProducts(productsData);
-  
+
       setShowProductsModal(true); 
     } catch (error) {
       console.error('Error al obtener productos relacionados:', error);
@@ -63,6 +65,7 @@ const SaleProducts: React.FC<SaleProductsProps> = ({ saleId }) => {
   }, [saleId]);
 
   const handleCloseModal = () => setShowProductsModal(false);
+  const total = products.reduce((acc, { product, count }) => acc + product.price * count, 0);
 
   return (
     <>
@@ -71,16 +74,18 @@ const SaleProducts: React.FC<SaleProductsProps> = ({ saleId }) => {
           <Modal.Title>Product Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {products.map((product) => (
-            <div key={product.sku}>
-              <p>Name: {product.name}</p>
-              <p>Price: ${product.price.toFixed(2)}</p>
-              <p>SKU: {product.sku}</p>
+          {products.map((data) => (
+            <div key={data.product.sku}>
+              <p>Name: {data.product.name}</p>
+              <p>Price: ${data.product.price.toFixed(2)}</p>
+              <p>SKU: {data.product.sku}</p>
+              <p>Amount: {data.count}</p>
               <hr /> 
             </div>
           ))}
         </Modal.Body>
         <Modal.Footer>
+          <p>Total: ${total.toFixed(2)}</p>
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>
